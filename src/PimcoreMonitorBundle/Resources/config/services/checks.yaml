@@ -1,0 +1,96 @@
+services:
+
+    # App Environment Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\AppEnvironment:
+        arguments:
+            - '%env(APP_ENV)%'
+        tags:
+            - { name: pimcore_monitor.check, alias: app_environment }
+
+    # Disk Usage Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\DiskUsage:
+        arguments:
+            - 90
+            - 95
+        tags:
+            - { name: pimcore_monitor.check, alias: disk_usage }
+
+    # Doctrine Migrations Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\DoctrineMigrations:
+        arguments:
+            - '@Doctrine\Migrations\DependencyFactory'
+        tags:
+            - { name: pimcore_monitor.check, alias: doctrine_migrations }
+
+    # Hosting Size Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\HostingSize:
+        arguments:
+            - 48318382080 # 45GB
+            - 53687091200 # 50GB
+            - '%kernel.project_dir%'
+        tags:
+            - { name: pimcore_monitor.check, alias: hosting_size }
+
+    # HTTPS Connection Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\HttpsConnection:
+        arguments:
+            - '@Symfony\Component\HttpFoundation\RequestStack'
+        tags:
+            - { name: pimcore_monitor.check, alias: https_connection }
+
+    # MySQL Version Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\MySqlVersion:
+        arguments:
+            - '10.1'
+            - '@Pimcore\Db\ConnectionInterface'
+            - '>='
+        tags:
+            - { name: pimcore_monitor.check, alias: mysql_version }
+
+    # PHP Version Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\PhpVersion:
+        arguments:
+            - '8.0'
+            - '>='
+        tags:
+            - { name: pimcore_monitor.check, alias: php_version }
+
+    # Pimcore Areabricks Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreAreabricks:
+        arguments:
+            - '@Pimcore\Extension\Document\Areabrick\AreabrickManagerInterface'
+        tags:
+            - { name: pimcore_monitor.check, alias: pimcore_areabricks }
+
+    # Pimcore Bundles Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreBundles:
+        arguments:
+            - '@Pimcore\Extension\Bundle\PimcoreBundleManager'
+        tags:
+            - { name: pimcore_monitor.check, alias: pimcore_bundles }
+
+    # Pimcore Element Count Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreElementCount:
+        arguments:
+            - 100000
+            - 150000
+            - '@Pimcore\Db\ConnectionInterface'
+        tags:
+            - { name: pimcore_monitor.check, alias: pimcore_element_count }
+
+    # Pimcore Maintenance Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreMaintenance:
+        arguments:
+            - '@Pimcore\Maintenance\Executor'
+        tags:
+            - { name: pimcore_monitor.check, alias: pimcore_maintenance }
+
+    # Pimcore Users Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreUsers:
+        tags:
+            - { name: pimcore_monitor.check, alias: pimcore_users }
+
+    # Pimcore Version Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreVersion:
+        tags:
+            - { name: pimcore_monitor.check, alias: pimcore_version }

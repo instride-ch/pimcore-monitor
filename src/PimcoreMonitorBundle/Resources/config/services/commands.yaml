@@ -1,0 +1,20 @@
+services:
+
+    # Health Check Command
+    Wvision\Bundle\PimcoreMonitorBundle\Command\HealthCheckCommand:
+        arguments:
+            - '@Wvision\Bundle\PimcoreMonitorBundle\Manager\RunnerManager'
+        tags:
+            - { name: console.command }
+
+    # Health Report Command
+    Wvision\Bundle\PimcoreMonitorBundle\Command\HealthReportCommand:
+        arguments:
+            - '%pimcore_monitor.default_report_endpoint%'
+            - '%pimcore_monitor.api_key%'
+            - '%pimcore.config%'
+            - '%secret%'
+            - '@http_client'
+            - '@Wvision\Bundle\PimcoreMonitorBundle\Manager\RunnerManager'
+        tags:
+            - { name: console.command }
