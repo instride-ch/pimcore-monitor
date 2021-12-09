@@ -2,7 +2,6 @@
 
 namespace Wvision\Bundle\PimcoreMonitorBundle\Command;
 
-use Laminas\Diagnostics\Runner\Reporter\BasicConsole;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,7 +12,6 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\HttpClient\ResponseInterface;
 use Wvision\Bundle\PimcoreMonitorBundle\Manager\RunnerManager;
 use Wvision\Bundle\PimcoreMonitorBundle\Reporter\ArrayReporter;
 
@@ -55,8 +53,20 @@ class HealthReportCommand extends Command
                 'endpoint',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Overwrite the default report endpoint',
+                'Overwrite the default endpoint to send the report data to.',
                 $this->reportEndpoint
+            )
+            ->addOption(
+                'exclude',
+                'ex',
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'List any task alias that you want to exclude from execution.'
+            )
+            ->addOption(
+                'include',
+                'in',
+                InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY,
+                'List any task alias that you want to execute.'
             )
             ->setHelp('This command runs all checks and sends them to the defined report endpoint.');
     }
@@ -81,11 +91,14 @@ class HealthReportCommand extends Command
             return Command::FAILURE;
         }
 
-        $checkReporter = new ArrayReporter();
+        $checkReporter = new ArrayReporter(
+            false,
+            $input->getOption('exclude'),
+            $input->getOption('include')
+        );
 
         $runner = $this->runnerManager->getRunner();
         $runner->addReporter($checkReporter);
-        $runner->addReporter(new BasicConsole());
         $runner->run();
 
         try {
@@ -98,13 +111,10 @@ class HealthReportCommand extends Command
                 ],
             ]);
             $payload = $response->toArray();
-        } catch (TransportExceptionInterface | ClientExceptionInterface | DecodingExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface) {
-            $response = null;
-            $payload = null;
-        }
-
-        if (!$response instanceof ResponseInterface) {
-            $output->writeln('<error>Sending the data to the endpoint failed!</error>');
+        } catch (TransportExceptionInterface | ClientExceptionInterface | DecodingExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
+            $output->writeln(
+                sprintf('<error>Sending the data to the endpoint failed!</error> – %s', $e->getMessage())
+            );
 
             return Command::FAILURE;
         }

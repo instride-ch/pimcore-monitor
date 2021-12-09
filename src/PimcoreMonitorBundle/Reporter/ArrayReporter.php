@@ -19,10 +19,14 @@ class ArrayReporter implements ReporterInterface
     protected string $globalStatus = self::STATUS_OK;
     protected array $results = [];
     protected bool $flattenOutput;
+    protected array $excludeChecks;
+    protected array $includeChecks;
 
-    public function __construct(bool $flattenOutput = false)
+    public function __construct(bool $flattenOutput = false, array $excludeChecks = [], array $includeChecks = [])
     {
         $this->flattenOutput = $flattenOutput;
+        $this->excludeChecks = $excludeChecks;
+        $this->includeChecks = $includeChecks;
     }
 
     public function getResults(): array
@@ -37,10 +41,22 @@ class ArrayReporter implements ReporterInterface
 
     public function onStart(\ArrayObject $checks, $runnerConfig): void
     {
+        if (empty($this->excludeChecks)) {
+            return;
+        }
+
+        foreach ($this->excludeChecks as $checkAlias) {
+            $checks->offsetUnset($checkAlias);
+        }
     }
 
-    public function onBeforeRun(BaseCheckInterface|CheckInterface $check, $checkAlias = null)
+    public function onBeforeRun(BaseCheckInterface|CheckInterface $check, $checkAlias = null): bool
     {
+        if (empty($this->includeChecks)) {
+            return true;
+        }
+
+        return \in_array($checkAlias, $this->includeChecks, true);
     }
 
     public function onAfterRun(BaseCheckInterface|CheckInterface $check, ResultInterface $result, $checkAlias = null)
