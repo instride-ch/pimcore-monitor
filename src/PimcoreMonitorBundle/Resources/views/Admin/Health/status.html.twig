@@ -4,12 +4,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>System Health Status</title>
+    <link rel="icon" type="image/png" href="/bundles/pimcoreadmin/img/favicon/favicon-32x32.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <main class="container">
-        <h1 class="mt-5">System Health Status</h1>
+        <div class="row align-items-end mt-5">
+            <div class="col">
+                <h1 class="mb-0">System Health Status</h1>
+            </div>
+            {% if results is defined and results is not empty %}
+                <div class="col-auto">
+                    <a href="{{ path('pimcore_monitor_system_health_report') }}" target="_blank" class="btn btn-primary">
+                        <i class="me-2 bi bi-info-circle-fill"></i>Details
+                    </a>
+                </div>
+            {% endif %}
+        </div>
 
         {% if results is defined and results is not empty %}
             <div class="table-responsive mt-3">

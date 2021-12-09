@@ -10,10 +10,10 @@ pimcore.plugin.PimcoreMonitor = Class.create(pimcore.plugin.admin, {
     },
 
     pimcoreReady: function () {
-        var user = pimcore.globalmanager.get('user');
+        const user = pimcore.globalmanager.get('user');
 
         if (user.admin) {
-            var systemHealthStatus = new Ext.Action({
+            const systemHealthStatus = new Ext.Action({
                 text: t('pimcore_monitor_system_health_status'),
                 iconCls: 'pimcore_monitor_nav_icon_health_status',
                 handler: this.openSystemHealthStatusPage,
@@ -24,7 +24,7 @@ pimcore.plugin.PimcoreMonitor = Class.create(pimcore.plugin.admin, {
     },
 
     openSystemHealthStatusPage: function () {
-        var systemHealthStatusPanelId = 'pimcore_monitor_system_health_status';
+        const systemHealthStatusPanelId = 'pimcore_monitor_system_health_status';
 
         try {
             pimcore.globalmanager.get(systemHealthStatusPanelId).activate();
@@ -42,4 +42,4 @@ pimcore.plugin.PimcoreMonitor = Class.create(pimcore.plugin.admin, {
     },
 });
 
-var PimcoreMonitorPlugin = new pimcore.plugin.PimcoreMonitor();
+const PimcoreMonitorPlugin = new pimcore.plugin.PimcoreMonitor();

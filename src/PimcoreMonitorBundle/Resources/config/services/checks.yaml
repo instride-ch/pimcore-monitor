@@ -3,15 +3,15 @@ services:
     # App Environment Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\AppEnvironment:
         arguments:
-            - '%env(APP_ENV)%'
+            - '%pimcore_monitor.checks.app_environment.environment%'
         tags:
             - { name: pimcore_monitor.check, alias: app_environment }
 
     # Disk Usage Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\DiskUsage:
         arguments:
-            - 90
-            - 95
+            - '%pimcore_monitor.checks.disk_usage.warning_threshold%'
+            - '%pimcore_monitor.checks.disk_usage.critical_threshold%'
         tags:
             - { name: pimcore_monitor.check, alias: disk_usage }
 
@@ -25,9 +25,9 @@ services:
     # Hosting Size Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\HostingSize:
         arguments:
-            - 48318382080 # 45GB
-            - 53687091200 # 50GB
-            - '%kernel.project_dir%'
+            - '%pimcore_monitor.checks.hosting_size.warning_threshold%'
+            - '%pimcore_monitor.checks.hosting_size.critical_threshold%'
+            - '%pimcore_monitor.checks.hosting_size.path%'
         tags:
             - { name: pimcore_monitor.check, alias: hosting_size }
 
@@ -41,17 +41,17 @@ services:
     # MySQL Version Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\MySqlVersion:
         arguments:
-            - '10.1'
+            - '%pimcore_monitor.checks.mysql_version.version%'
+            - '%pimcore_monitor.checks.mysql_version.operator%'
             - '@Pimcore\Db\ConnectionInterface'
-            - '>='
         tags:
             - { name: pimcore_monitor.check, alias: mysql_version }
 
     # PHP Version Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PhpVersion:
         arguments:
-            - '8.0'
-            - '>='
+            - '%pimcore_monitor.checks.php_version.version%'
+            - '%pimcore_monitor.checks.php_version.operator%'
         tags:
             - { name: pimcore_monitor.check, alias: php_version }
 
@@ -72,8 +72,8 @@ services:
     # Pimcore Element Count Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreElementCount:
         arguments:
-            - 100000
-            - 150000
+            - '%pimcore_monitor.checks.pimcore_element_count.warning_threshold%'
+            - '%pimcore_monitor.checks.pimcore_element_count.critical_threshold%'
             - '@Pimcore\Db\ConnectionInterface'
         tags:
             - { name: pimcore_monitor.check, alias: pimcore_element_count }

@@ -1,6 +1,6 @@
-pimcore_monitor_health:
-    path: /_monitor/health
-    defaults: { _controller: Wvision\Bundle\PimcoreMonitorBundle\Controller\HealthCheckController::health }
+pimcore_monitor_system_health_report:
+    path: /admin/pimcore-monitor/system-health/report
+    defaults: { _controller: Wvision\Bundle\PimcoreMonitorBundle\Controller\Admin\HealthCheckController::health }
     methods:
         - GET
 

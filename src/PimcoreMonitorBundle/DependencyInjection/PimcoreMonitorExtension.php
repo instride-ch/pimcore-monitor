@@ -20,8 +20,23 @@ class PimcoreMonitorExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('pimcore_monitor.api_key', $config['api_key']);
-        $container->setParameter('pimcore_monitor.default_report_endpoint', $config['default_report_endpoint']);
+        // Register report parameters
+        foreach ($config['report'] as $confName => $confValue) {
+            $container->setParameter(
+                sprintf('pimcore_monitor.report.%s', $confName),
+                $confValue
+            );
+        }
+
+        // Register checks parameters
+        foreach ($config['checks'] as $checkName => $checkConfig) {
+            foreach ($checkConfig as $confName => $confValue) {
+                $container->setParameter(
+                    sprintf('pimcore_monitor.checks.%s.%s', $checkName, $confName),
+                    $confValue
+                );
+            }
+        }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
