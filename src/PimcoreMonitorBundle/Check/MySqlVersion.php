@@ -2,9 +2,9 @@
 
 namespace Wvision\Bundle\PimcoreMonitorBundle\Check;
 
-use InvalidArgumentException;
 use Laminas\Diagnostics\Result\Failure;
 use Laminas\Diagnostics\Result\ResultInterface;
+use Laminas\Diagnostics\Result\Skip;
 use Laminas\Diagnostics\Result\Success;
 use Pimcore\Db\ConnectionInterface;
 
@@ -12,19 +12,14 @@ class MySqlVersion extends AbstractCheck
 {
     protected const IDENTIFIER = 'system:mysql_version';
 
+    protected bool $skip;
     protected string $version;
     protected string $operator;
     protected ConnectionInterface $db;
 
-    /**
-     *
-     * @param string $expectedVersion The expected version
-     * @param string $operator        One of: <, lt, <=, le, >, gt, >=, ge, ==, =, eq, !=, <>, ne
-     *
-     * @throws InvalidArgumentException
-     */
-    public function __construct(string $expectedVersion, string $operator, ConnectionInterface $db)
+    public function __construct(bool $skip, string $expectedVersion, string $operator, ConnectionInterface $db)
     {
+        $this->skip = $skip;
         $this->version = $expectedVersion;
         $this->operator = $operator;
         $this->db = $db;
@@ -35,6 +30,10 @@ class MySqlVersion extends AbstractCheck
      */
     public function check(): ResultInterface
     {
+        if ($this->skip) {
+            return new Skip('Check was skipped');
+        }
+
         try {
             $mysqlVersion = $this->db->fetchOne('SELECT VERSION()');
         } catch (\Exception) {

@@ -3,6 +3,7 @@ services:
     # App Environment Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\AppEnvironment:
         arguments:
+            - '%pimcore_monitor.checks.app_environment.skip%'
             - '%pimcore_monitor.checks.app_environment.environment%'
         tags:
             - { name: pimcore_monitor.check, alias: app_environment }
@@ -10,14 +11,17 @@ services:
     # Disk Usage Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\DiskUsage:
         arguments:
+            - '%pimcore_monitor.checks.disk_usage.skip%'
             - '%pimcore_monitor.checks.disk_usage.warning_threshold%'
             - '%pimcore_monitor.checks.disk_usage.critical_threshold%'
+            - '%pimcore_monitor.checks.disk_usage.path%'
         tags:
             - { name: pimcore_monitor.check, alias: disk_usage }
 
     # Doctrine Migrations Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\DoctrineMigrations:
         arguments:
+            - '%pimcore_monitor.checks.doctrine_migrations.skip%'
             - '@Doctrine\Migrations\DependencyFactory'
         tags:
             - { name: pimcore_monitor.check, alias: doctrine_migrations }
@@ -25,6 +29,7 @@ services:
     # Hosting Size Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\HostingSize:
         arguments:
+            - '%pimcore_monitor.checks.hosting_size.skip%'
             - '%pimcore_monitor.checks.hosting_size.warning_threshold%'
             - '%pimcore_monitor.checks.hosting_size.critical_threshold%'
             - '%pimcore_monitor.checks.hosting_size.path%'
@@ -34,6 +39,7 @@ services:
     # HTTPS Connection Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\HttpsConnection:
         arguments:
+            - '%pimcore_monitor.checks.https_connection.skip%'
             - '@Symfony\Component\HttpFoundation\RequestStack'
         tags:
             - { name: pimcore_monitor.check, alias: https_connection }
@@ -41,6 +47,7 @@ services:
     # MySQL Version Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\MySqlVersion:
         arguments:
+            - '%pimcore_monitor.checks.mysql_version.skip%'
             - '%pimcore_monitor.checks.mysql_version.version%'
             - '%pimcore_monitor.checks.mysql_version.operator%'
             - '@Pimcore\Db\ConnectionInterface'
@@ -50,6 +57,7 @@ services:
     # PHP Version Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PhpVersion:
         arguments:
+            - '%pimcore_monitor.checks.php_version.skip%'
             - '%pimcore_monitor.checks.php_version.version%'
             - '%pimcore_monitor.checks.php_version.operator%'
         tags:
@@ -58,6 +66,7 @@ services:
     # Pimcore Areabricks Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreAreabricks:
         arguments:
+            - '%pimcore_monitor.checks.pimcore_areabricks.skip%'
             - '@Pimcore\Extension\Document\Areabrick\AreabrickManagerInterface'
         tags:
             - { name: pimcore_monitor.check, alias: pimcore_areabricks }
@@ -65,6 +74,7 @@ services:
     # Pimcore Bundles Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreBundles:
         arguments:
+            - '%pimcore_monitor.checks.pimcore_bundles.skip%'
             - '@Pimcore\Extension\Bundle\PimcoreBundleManager'
         tags:
             - { name: pimcore_monitor.check, alias: pimcore_bundles }
@@ -72,6 +82,7 @@ services:
     # Pimcore Element Count Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreElementCount:
         arguments:
+            - '%pimcore_monitor.checks.pimcore_element_count.skip%'
             - '%pimcore_monitor.checks.pimcore_element_count.warning_threshold%'
             - '%pimcore_monitor.checks.pimcore_element_count.critical_threshold%'
             - '@Pimcore\Db\ConnectionInterface'
@@ -81,16 +92,21 @@ services:
     # Pimcore Maintenance Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreMaintenance:
         arguments:
+            - '%pimcore_monitor.checks.pimcore_maintenance.skip%'
             - '@Pimcore\Maintenance\Executor'
         tags:
             - { name: pimcore_monitor.check, alias: pimcore_maintenance }
 
     # Pimcore Users Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreUsers:
+        arguments:
+            - '%pimcore_monitor.checks.pimcore_users.skip%'
         tags:
             - { name: pimcore_monitor.check, alias: pimcore_users }
 
     # Pimcore Version Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreVersion:
+        arguments:
+            - '%pimcore_monitor.checks.pimcore_version.skip%'
         tags:
             - { name: pimcore_monitor.check, alias: pimcore_version }

@@ -4,6 +4,7 @@ namespace Wvision\Bundle\PimcoreMonitorBundle\Check;
 
 use Laminas\Diagnostics\Result\Failure;
 use Laminas\Diagnostics\Result\ResultInterface;
+use Laminas\Diagnostics\Result\Skip;
 use Laminas\Diagnostics\Result\Success;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -12,10 +13,12 @@ class HttpsConnection extends AbstractCheck
 {
     protected const IDENTIFIER = 'system:https_connection';
 
+    protected bool $skip;
     protected ?Request $request;
 
-    public function __construct(RequestStack $requestStack)
+    public function __construct(bool $skip, RequestStack $requestStack)
     {
+        $this->skip = $skip;
         $this->request = $requestStack->getMainRequest() ?: $requestStack->getCurrentRequest();
     }
 
@@ -24,6 +27,10 @@ class HttpsConnection extends AbstractCheck
      */
     public function check(): ResultInterface
     {
+        if ($this->skip) {
+            return new Skip('Check was skipped');
+        }
+
         if (null === $this->request || ! $this->request->isSecure()) {
             return new Failure('HTTPS encryption not activated');
         }

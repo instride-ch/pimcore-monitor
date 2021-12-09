@@ -4,6 +4,7 @@ namespace Wvision\Bundle\PimcoreMonitorBundle\Check;
 
 use Laminas\Diagnostics\Result\Failure;
 use Laminas\Diagnostics\Result\ResultInterface;
+use Laminas\Diagnostics\Result\Skip;
 use Laminas\Diagnostics\Result\Success;
 use Laminas\Diagnostics\Result\Warning;
 
@@ -11,12 +12,14 @@ class HostingSize extends AbstractCheck
 {
     protected const IDENTIFIER = 'device:hosting_size';
 
-    private int $warningThreshold;
-    private int $criticalThreshold;
-    private string $path;
+    protected bool $skip;
+    protected int $warningThreshold;
+    protected int $criticalThreshold;
+    protected string $path;
 
-    public function __construct(int $warningThreshold, int $criticalThreshold, string $path)
+    public function __construct(bool $skip, int $warningThreshold, int $criticalThreshold, string $path)
     {
+        $this->skip = $skip;
         $this->warningThreshold = $warningThreshold;
         $this->criticalThreshold = $criticalThreshold;
         $this->path = $path;
@@ -27,6 +30,10 @@ class HostingSize extends AbstractCheck
      */
     public function check(): ResultInterface
     {
+        if ($this->skip) {
+            return new Skip('Check was skipped');
+        }
+
         $size = $this->getDirectorySize();
 
         if ($size >= $this->criticalThreshold) {

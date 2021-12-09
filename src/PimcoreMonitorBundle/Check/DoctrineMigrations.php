@@ -1,5 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Pimcore Monitor
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2022 w-vision AG (https://www.w-vision.ch)
+ * @license    https://github.com/w-vision/PimcoreMonitorBundle/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
+
 namespace Wvision\Bundle\PimcoreMonitorBundle\Check;
 
 use Doctrine\Migrations\Configuration\Configuration;
@@ -10,11 +25,14 @@ use Doctrine\Migrations\Version\Version;
 use InvalidArgumentException;
 use Laminas\Diagnostics\Result\Failure;
 use Laminas\Diagnostics\Result\ResultInterface;
+use Laminas\Diagnostics\Result\Skip;
 use Laminas\Diagnostics\Result\Success;
 
 class DoctrineMigrations extends AbstractCheck
 {
     protected const IDENTIFIER = 'system:doctrine_migrations';
+
+    protected bool $skip;
 
     /**
      * Type depends on the installed version of doctrine/migrations:
@@ -32,8 +50,10 @@ class DoctrineMigrations extends AbstractCheck
      */
     protected array $migratedVersions;
 
-    public function __construct($input)
+    public function __construct(bool $skip, $input)
     {
+        $this->skip = $skip;
+
         // check for doctrine/migrations:^3.0
         if ($input instanceof DependencyFactory) {
             $this->availableVersions = $this->getAvailableVersionsFromDependencyFactory($input);
@@ -42,9 +62,9 @@ class DoctrineMigrations extends AbstractCheck
         }
 
         // check for doctrine/migrations:^2.0
-        if ($input instanceof Configuration
-            && method_exists($input, 'getAvailableVersions')
-            && method_exists($input, 'getMigratedVersions')
+        if ($input instanceof Configuration &&
+            method_exists($input, 'getAvailableVersions') &&
+            method_exists($input, 'getMigratedVersions')
         ) {
             $this->availableVersions = $input->getAvailableVersions();
             $this->migratedVersions = $input->getMigratedVersions();
@@ -64,6 +84,10 @@ class DoctrineMigrations extends AbstractCheck
      */
     public function check(): ResultInterface
     {
+        if ($this->skip) {
+            return new Skip('Check was skipped');
+        }
+
         $notMigratedVersions = array_diff($this->availableVersions, $this->migratedVersions);
         if (! empty($notMigratedVersions)) {
             return new Failure(
