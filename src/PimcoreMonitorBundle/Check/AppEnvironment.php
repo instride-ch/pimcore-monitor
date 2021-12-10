@@ -45,10 +45,10 @@ class AppEnvironment extends AbstractCheck
         }
 
         if ('prod' !== $this->environment) {
-            return new Failure('Application is not running in production mode');
+            return new Failure('Application is not running in production mode', $this->environment);
         }
 
-        return new Success('Application is running in production mode');
+        return new Success('Application is running in production mode', $this->environment);
     }
 
     /**

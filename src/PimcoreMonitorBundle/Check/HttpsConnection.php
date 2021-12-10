@@ -6,6 +6,7 @@ use Laminas\Diagnostics\Result\Failure;
 use Laminas\Diagnostics\Result\ResultInterface;
 use Laminas\Diagnostics\Result\Skip;
 use Laminas\Diagnostics\Result\Success;
+use Laminas\Diagnostics\Result\Warning;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -31,11 +32,17 @@ class HttpsConnection extends AbstractCheck
             return new Skip('Check was skipped');
         }
 
-        if (null === $this->request || ! $this->request->isSecure()) {
-            return new Failure('HTTPS encryption not activated');
+        if (null === $this->request) {
+            return new Warning('HTTPS encryption could not be checked');
         }
 
-        return new Success('HTTPS encryption activated');
+        $enabled = $this->request->isSecure();
+
+        if (! $enabled) {
+            return new Failure('HTTPS encryption not activated', $enabled);
+        }
+
+        return new Success('HTTPS encryption activated', $enabled);
     }
 
     /**
