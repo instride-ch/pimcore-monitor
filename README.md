@@ -24,10 +24,8 @@ requirements, like availability of PHP extensions.
 
 ## Further Information
 * [Installation & Bundle Configuration](docs/00-installation-configuration.md)
-* [Adding and Running Checks](docs/01-adding-and-running-checks.md)
-* [Adding additional Reporters](docs/02-adding-additional-reporters.md)
-* [Grouping Checks](docs/03-grouping-checks.md)
-* [Commands](docs/04-commands.md)
+* [Adding and Running Checks](docs/01-adding-custom-checks.md)
+* [Commands](docs/02-commands.md)
 
 ## License
 **w-vision AG**, Sandgruebestrasse 4, 6210 Sursee, Switzerland  
