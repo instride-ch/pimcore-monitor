@@ -18,7 +18,6 @@
   ],
   "require": {
     "php": ">=8.0",
-    "doctrine/orm": "^2.9",
     "laminas/laminas-diagnostics": "^1.8",
     "pimcore/pimcore": "^10.0"
   },
