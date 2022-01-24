@@ -36,7 +36,7 @@ class PimcoreMonitorExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         // Register report parameters
-        foreach ($config['report'] as $confName => $confValue) {
+        foreach ($config['report'] ?? [] as $confName => $confValue) {
             $container->setParameter(
                 sprintf('pimcore_monitor.report.%s', $confName),
                 $confValue
@@ -44,7 +44,7 @@ class PimcoreMonitorExtension extends Extension
         }
 
         // Register checks parameters
-        foreach ($config['checks'] as $checkName => $checkConfig) {
+        foreach ($config['checks'] ?? [] as $checkName => $checkConfig) {
             foreach ($checkConfig as $confName => $confValue) {
                 $container->setParameter(
                     sprintf('pimcore_monitor.checks.%s.%s', $checkName, $confName),
