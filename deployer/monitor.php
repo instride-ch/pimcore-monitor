@@ -17,8 +17,13 @@ declare(strict_types=1);
 
 namespace Deployer;
 
+desc('Runs the health report');
 task('pimcore:monitor:health-report', static function () {
-    run("cd {{release_path}} && {{bin/console}} pimcore:monitor:health-report");
+    run('cd {{release_path}} && {{bin/console}} pimcore:monitor:health-report');
 });
 
-after('deploy:success', 'pimcore:monitor:health-report');
+task('pimcore:monitor', [
+    'pimcore:monitor:health-report',
+]);
+
+after('deploy:success', 'pimcore:monitor');
