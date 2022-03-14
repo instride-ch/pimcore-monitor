@@ -40,7 +40,7 @@ services:
     Wvision\Bundle\PimcoreMonitorBundle\Check\HttpsConnection:
         arguments:
             - '%pimcore_monitor.checks.https_connection.skip%'
-            - '@Symfony\Component\HttpFoundation\RequestStack'
+            - '%pimcore.config%'
         tags:
             - { name: pimcore_monitor.check, alias: https_connection }
 

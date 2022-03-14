@@ -7,20 +7,18 @@ use Laminas\Diagnostics\Result\ResultInterface;
 use Laminas\Diagnostics\Result\Skip;
 use Laminas\Diagnostics\Result\Success;
 use Laminas\Diagnostics\Result\Warning;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class HttpsConnection extends AbstractCheck
 {
     protected const IDENTIFIER = 'system:https_connection';
 
     protected bool $skip;
-    protected ?Request $request;
+    protected array $systemConfig;
 
-    public function __construct(bool $skip, RequestStack $requestStack)
+    public function __construct(bool $skip, array $systemConfig)
     {
         $this->skip = $skip;
-        $this->request = $requestStack->getMainRequest() ?: $requestStack->getCurrentRequest();
+        $this->systemConfig = $systemConfig;
     }
 
     /**
@@ -32,17 +30,34 @@ class HttpsConnection extends AbstractCheck
             return new Skip('Check was skipped');
         }
 
-        if (null === $this->request) {
+        $host = $this->systemConfig['general']['domain'] ?? null;
+
+        if (null === $host) {
             return new Warning('HTTPS encryption could not be checked');
         }
 
-        $enabled = $this->request->isSecure();
+        // Create a stream context
+        $stream = stream_context_create(['ssl' => ['capture_peer_cert' => true]]);
+        $url = sprintf('https://%s', $host);
 
-        if (! $enabled) {
-            return new Failure('HTTPS encryption not activated', $enabled);
+        try {
+            // Bind the resource $url to $stream
+            $read = fopen($url, 'rb', false, $stream);
+
+            // Get the stream parameters
+            $params = stream_context_get_params($read);
+        } catch (\Exception) {
+            // Ignore exceptions thrown ...
         }
 
-        return new Success('HTTPS encryption activated', $enabled);
+        // Check if SSL certificate is present
+        $cert = $params['options']['ssl']['peer_certificate'] ?? null;
+
+        if (null === $cert) {
+            return new Failure('HTTPS encryption not activated', false);
+        }
+
+        return new Success('HTTPS encryption activated', true);
     }
 
     /**
