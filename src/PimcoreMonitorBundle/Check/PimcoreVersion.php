@@ -17,16 +17,14 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\PimcoreMonitorBundle\Check;
 
+use Composer\InstalledVersions;
 use Laminas\Diagnostics\Result\ResultInterface;
 use Laminas\Diagnostics\Result\Skip;
 use Laminas\Diagnostics\Result\Success;
-use PackageVersions\Versions;
 
 class PimcoreVersion extends AbstractCheck
 {
     protected const IDENTIFIER = 'pimcore:version';
-    protected const PART_SEMVER = 0;
-    protected const PART_REFERENCE = 1;
 
     protected bool $skip;
 
@@ -44,11 +42,11 @@ class PimcoreVersion extends AbstractCheck
             return new Skip('Check was skipped');
         }
 
-        $version = explode('@', Versions::getVersion('pimcore/pimcore'));
+        $version = InstalledVersions::getPrettyVersion('pimcore/pimcore');
 
-        return new Success(sprintf('The system is running on Pimcore %s', $version[self::PART_SEMVER]), [
-            'semver' => $version[self::PART_SEMVER],
-            'reference' => $version[self::PART_REFERENCE],
+        return new Success(sprintf('The system is running on Pimcore %s', $version), [
+            'semver' => $version,
+            'reference' => InstalledVersions::getReference('pimcore/pimcore'),
         ]);
     }
 
