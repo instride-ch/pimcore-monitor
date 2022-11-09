@@ -17,10 +17,10 @@ declare(strict_types=1);
 
 namespace Deployer;
 
-desc('Runs the health report');
+desc('Runs the health report, if not disabled');
 task('pimcore:monitor:health-report', static function () {
     run('cd {{release_path}} && {{bin/console}} pimcore:monitor:health-report');
-});
+})->select('disable!=monitor_health_report');
 
 task('pimcore:monitor', [
     'pimcore:monitor:health-report',
