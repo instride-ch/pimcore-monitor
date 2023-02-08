@@ -22,12 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class RunnerManager
 {
-    protected ContainerInterface $container;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
+    public function __construct(protected ContainerInterface $container) {}
 
     public function getRunner(): Runner
     {

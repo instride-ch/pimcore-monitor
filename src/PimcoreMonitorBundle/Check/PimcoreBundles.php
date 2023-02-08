@@ -26,14 +26,7 @@ class PimcoreBundles extends AbstractCheck
 {
     protected const IDENTIFIER = 'pimcore:bundles';
 
-    protected bool $skip;
-    protected PimcoreBundleManager $pimcoreBundleManager;
-
-    public function __construct(bool $skip, PimcoreBundleManager $pimcoreBundleManager)
-    {
-        $this->skip = $skip;
-        $this->pimcoreBundleManager = $pimcoreBundleManager;
-    }
+    public function __construct(protected bool $skip, protected PimcoreBundleManager $pimcoreBundleManager) {}
 
     public function check(): ResultInterface
     {
@@ -53,7 +46,7 @@ class PimcoreBundles extends AbstractCheck
             ];
         }
 
-        return new Success(sprintf('There are %s Pimcore bundles in the system', \count($bundles)), $bundles);
+        return new Success(\sprintf('There are %s Pimcore bundles in the system', \count($bundles)), $bundles);
     }
 
     public function getLabel(): string

@@ -27,18 +27,12 @@ class DiskUsage extends AbstractCheck
 {
     protected const IDENTIFIER = 'device:disk_usage';
 
-    protected bool $skip;
-    protected int $warningThreshold;
-    protected int $criticalThreshold;
-    protected string $path;
-
-    public function __construct(bool $skip, int $warningThreshold, int $criticalThreshold, string $path)
-    {
-        $this->skip = $skip;
-        $this->warningThreshold = $warningThreshold;
-        $this->criticalThreshold = $criticalThreshold;
-        $this->path = $path;
-    }
+    public function __construct(
+        protected bool $skip,
+        protected int $warningThreshold,
+        protected int $criticalThreshold,
+        protected string $path
+    ) {}
 
     /**
      * {@inheritDoc}
@@ -49,32 +43,26 @@ class DiskUsage extends AbstractCheck
             return new Skip('Check was skipped');
         }
 
-        $df = disk_free_space($this->path);
-        $dt = disk_total_space($this->path);
+        $df = \disk_free_space($this->path);
+        $dt = \disk_total_space($this->path);
         $du = $dt - $df;
         $dp = ($du / $dt) * 100;
 
+        $data = [
+            'used' => \formatBytes($du),
+            'free' => \formatBytes($df),
+            'total' => \formatBytes($dt),
+        ];
+
         if ($dp >= $this->criticalThreshold) {
-            return new Failure(sprintf('Disk usage too high: %2d%%', $dp), [
-                'used' => formatBytes($du),
-                'free' => formatBytes($df),
-                'total' => formatBytes($dt),
-            ]);
+            return new Failure(\sprintf('Disk usage too high: %2d%%', $dp), $data);
         }
 
         if ($dp >= $this->warningThreshold) {
-            return new Warning(sprintf('Disk usage high: %2d%%', $dp), [
-                'used' => formatBytes($du),
-                'free' => formatBytes($df),
-                'total' => formatBytes($dt),
-            ]);
+            return new Warning(\sprintf('Disk usage high: %2d%%', $dp), $data);
         }
 
-        return new Success(sprintf('Disk usage is %2d%%', $dp), [
-            'used' => formatBytes($du),
-            'free' => formatBytes($df),
-            'total' => formatBytes($dt),
-        ]);
+        return new Success(\sprintf('Disk usage is %2d%%', $dp), $data);
     }
 
     /**

@@ -33,16 +33,12 @@ class ArrayReporter implements ReporterInterface
 
     protected string $globalStatus = self::STATUS_OK;
     protected array $results = [];
-    protected bool $flattenOutput;
-    protected array $excludeChecks;
-    protected array $includeChecks;
 
-    public function __construct(bool $flattenOutput = false, array $excludeChecks = [], array $includeChecks = [])
-    {
-        $this->flattenOutput = $flattenOutput;
-        $this->excludeChecks = $excludeChecks;
-        $this->includeChecks = $includeChecks;
-    }
+    public function __construct(
+        protected bool $flattenOutput = false,
+        protected array $excludeChecks = [],
+        protected array $includeChecks = []
+    ) {}
 
     public function getResults(): array
     {
@@ -112,7 +108,7 @@ class ArrayReporter implements ReporterInterface
             $this->results[] = $data;
         } else {
             $temp =& $this->results;
-            foreach (explode(':', $check->getIdentifier()) as $key) {
+            foreach (\explode(':', $check->getIdentifier()) as $key) {
                 $temp =& $temp[$key];
             }
 

@@ -26,14 +26,7 @@ class PimcoreAreabricks extends AbstractCheck
 {
     protected const IDENTIFIER = 'pimcore:areabricks';
 
-    protected bool $skip;
-    protected AreabrickManagerInterface $areabrickManager;
-
-    public function __construct(bool $skip, AreabrickManagerInterface $areabrickManager)
-    {
-        $this->skip = $skip;
-        $this->areabrickManager = $areabrickManager;
-    }
+    public function __construct(protected bool $skip, protected AreabrickManagerInterface $areabrickManager) {}
 
     public function check(): ResultInterface
     {
@@ -52,7 +45,7 @@ class PimcoreAreabricks extends AbstractCheck
             ];
         }
 
-        return new Success(sprintf('There are %s Areabricks in the system', \count($bricks)), $bricks);
+        return new Success(\sprintf('There are %s Areabricks in the system', \count($bricks)), $bricks);
     }
 
     public function getLabel(): string

@@ -34,30 +34,15 @@ class HealthReportCommand extends Command
 {
     protected static $defaultName = 'pimcore:monitor:health-report';
 
-    private string $reportEndpoint;
-    private string $apiKey;
-    private array $pimcoreSystemConfig;
-    private string $secret;
-    private HttpClientInterface $httpClient;
-    private RunnerManager $runnerManager;
-
     public function __construct(
-        string $reportEndpoint,
-        string $apiKey,
-        array $pimcoreSystemConfig,
-        string $secret,
-        HttpClientInterface $httpClient,
-        RunnerManager $runnerManager
+        private string $reportEndpoint,
+        private string $apiKey,
+        private array $pimcoreSystemConfig,
+        private string $secret,
+        private HttpClientInterface $httpClient,
+        private RunnerManager $runnerManager
     ) {
-        $this->reportEndpoint = $reportEndpoint;
-
         parent::__construct();
-
-        $this->apiKey = $apiKey;
-        $this->pimcoreSystemConfig = $pimcoreSystemConfig;
-        $this->secret = $secret;
-        $this->httpClient = $httpClient;
-        $this->runnerManager = $runnerManager;
     }
 
     protected function configure(): void
@@ -126,15 +111,21 @@ class HealthReportCommand extends Command
                 ],
             ]);
             $payload = $response->toArray();
-        } catch (TransportExceptionInterface | ClientExceptionInterface | DecodingExceptionInterface | RedirectionExceptionInterface | ServerExceptionInterface $e) {
+        } catch (
+            TransportExceptionInterface |
+            ClientExceptionInterface |
+            DecodingExceptionInterface |
+            RedirectionExceptionInterface |
+            ServerExceptionInterface $e
+        ) {
             $output->writeln(
-                sprintf('<error>Sending the data to the endpoint failed!</error> – %s', $e->getMessage())
+                \sprintf('<error>Sending the data to the endpoint failed!</error> – %s', $e->getMessage())
             );
 
             return Command::FAILURE;
         }
 
-        $output->writeln(sprintf('<question>%s: %s</question>', $payload['status'], $payload['message']));
+        $output->writeln(\sprintf('<question>%s: %s</question>', $payload['status'], $payload['message']));
 
         return $response->getStatusCode() === 200 ? Command::SUCCESS : Command::FAILURE;
     }
@@ -146,7 +137,7 @@ class HealthReportCommand extends Command
         }
 
         try {
-            $instanceId = sha1(substr($this->secret, 3, -3));
+            $instanceId = \sha1(\substr($this->secret, 3, -3));
         } catch (\Exception) {
             $instanceId = null;
         }

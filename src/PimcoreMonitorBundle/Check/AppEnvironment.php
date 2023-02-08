@@ -26,14 +26,7 @@ class AppEnvironment extends AbstractCheck
 {
     protected const IDENTIFIER = 'system:app_environment';
 
-    protected bool $skip;
-    protected string $environment;
-
-    public function __construct(bool $skip, string $environment)
-    {
-        $this->skip = $skip;
-        $this->environment = $environment;
-    }
+    public function __construct(protected bool $skip, protected string $environment) {}
 
     /**
      * {@inheritDoc}

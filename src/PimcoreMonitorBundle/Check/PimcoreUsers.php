@@ -27,12 +27,7 @@ class PimcoreUsers extends AbstractCheck
 {
     protected const IDENTIFIER = 'pimcore:users';
 
-    protected bool $skip;
-
-    public function __construct(bool $skip)
-    {
-        $this->skip = $skip;
-    }
+    public function __construct(protected bool $skip) {}
 
     /**
      * {@inheritDoc}
@@ -62,7 +57,7 @@ class PimcoreUsers extends AbstractCheck
             ];
         }
 
-        return new Success(sprintf('There are %s Pimcore users in the system', \count($users)), $users);
+        return new Success(\sprintf('There are %s Pimcore users in the system', \count($users)), $users);
     }
 
     /**

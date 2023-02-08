@@ -16,5 +16,5 @@ services:
 
     # Runner
     pimcore_monitor.runner:
-        class: Wvision\Bundle\PimcoreMonitorBundle\Runner\Runner
+        class: Laminas\Diagnostics\Runner\Runner
         public: true

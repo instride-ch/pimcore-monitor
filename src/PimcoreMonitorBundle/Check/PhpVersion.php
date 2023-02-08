@@ -26,16 +26,7 @@ class PhpVersion extends AbstractCheck
 {
     protected const IDENTIFIER = 'system:php_version';
 
-    protected bool $skip;
-    protected string $version;
-    protected string $operator;
-
-    public function __construct(bool $skip, string $expectedVersion, string $operator)
-    {
-        $this->skip = $skip;
-        $this->version = $expectedVersion;
-        $this->operator = $operator;
-    }
+    public function __construct(protected bool $skip, protected string $expectedVersion, protected string $operator) {}
 
     /**
      * {@inheritDoc}
@@ -46,12 +37,12 @@ class PhpVersion extends AbstractCheck
             return new Skip('Check was skipped');
         }
 
-        if (! version_compare(PHP_VERSION, $this->version, $this->operator)) {
-            return new Failure(sprintf(
+        if (! \version_compare(PHP_VERSION, $this->expectedVersion, $this->operator)) {
+            return new Failure(\sprintf(
                 'Current PHP version is %s, expected %s %s',
                 PHP_VERSION,
                 $this->operator,
-                $this->version
+                $this->expectedVersion
             ), PHP_VERSION);
         }
 

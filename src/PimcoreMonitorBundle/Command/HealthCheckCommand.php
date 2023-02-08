@@ -27,13 +27,9 @@ class HealthCheckCommand extends Command
 {
     protected static $defaultName = 'pimcore:monitor:health-check';
 
-    private RunnerManager $runnerManager;
-
-    public function __construct(RunnerManager $runnerManager)
+    public function __construct(private RunnerManager $runnerManager)
     {
         parent::__construct();
-
-        $this->runnerManager = $runnerManager;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

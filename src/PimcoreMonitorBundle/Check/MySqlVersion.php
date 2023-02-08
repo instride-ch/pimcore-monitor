@@ -1,29 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Pimcore Monitor
+ *
+ * LICENSE
+ *
+ * This source file is subject to the GNU General Public License version 3 (GPLv3)
+ * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
+ * files that are distributed with this source code.
+ *
+ * @copyright  Copyright (c) 2022 w-vision AG (https://www.w-vision.ch)
+ * @license    https://github.com/w-vision/PimcoreMonitorBundle/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ */
+
 namespace Wvision\Bundle\PimcoreMonitorBundle\Check;
 
+use Doctrine\DBAL\Connection;
 use Laminas\Diagnostics\Result\Failure;
 use Laminas\Diagnostics\Result\ResultInterface;
 use Laminas\Diagnostics\Result\Skip;
 use Laminas\Diagnostics\Result\Success;
-use Pimcore\Db\ConnectionInterface;
 
 class MySqlVersion extends AbstractCheck
 {
     protected const IDENTIFIER = 'system:mysql_version';
 
-    protected bool $skip;
-    protected string $version;
-    protected string $operator;
-    protected ConnectionInterface $db;
-
-    public function __construct(bool $skip, string $expectedVersion, string $operator, ConnectionInterface $db)
-    {
-        $this->skip = $skip;
-        $this->version = $expectedVersion;
-        $this->operator = $operator;
-        $this->db = $db;
-    }
+    public function __construct(
+        protected bool $skip,
+        protected string $expectedVersion,
+        protected string $operator,
+        protected Connection $connection
+    ) {}
 
     /**
      * {@inheritDoc}
@@ -35,17 +44,17 @@ class MySqlVersion extends AbstractCheck
         }
 
         try {
-            $mysqlVersion = $this->db->fetchOne('SELECT VERSION()');
+            $mysqlVersion = $this->connection->fetchOne('SELECT VERSION()');
         } catch (\Exception) {
             $mysqlVersion = null;
         }
 
-        if (! version_compare($mysqlVersion, $this->version, $this->operator)) {
-            return new Failure(sprintf(
+        if (! \version_compare($mysqlVersion, $this->expectedVersion, $this->operator)) {
+            return new Failure(\sprintf(
                 'Current MySQL version is %s, expected %s %s',
                 $mysqlVersion,
                 $this->operator,
-                $this->version
+                $this->expectedVersion
             ), $mysqlVersion);
         }
 

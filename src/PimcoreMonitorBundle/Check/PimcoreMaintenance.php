@@ -28,14 +28,7 @@ class PimcoreMaintenance extends AbstractCheck
 {
     protected const IDENTIFIER = 'pimcore:maintenance';
 
-    protected bool $skip;
-    protected ExecutorInterface $maintenanceExecutor;
-
-    public function __construct(bool $skip, ExecutorInterface $maintenanceExecutor)
-    {
-        $this->skip = $skip;
-        $this->maintenanceExecutor = $maintenanceExecutor;
-    }
+    public function __construct(protected bool $skip, protected ExecutorInterface $maintenanceExecutor) {}
 
     /**
      * {@inheritDoc}
@@ -54,7 +47,7 @@ class PimcoreMaintenance extends AbstractCheck
         ];
 
         // Maintenance script should run at least every hour + a little tolerance
-        if ($lastExecution && (time() - $lastExecution) < 3660) {
+        if ($lastExecution && (\time() - $lastExecution) < 3660) {
             $data['active'] = true;
 
             return new Success('Pimcore maintenance is activated', $data);

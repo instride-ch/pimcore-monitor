@@ -31,7 +31,7 @@ class CheckTagCompilerPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('pimcore_monitor.check') as $id => $tags) {
             foreach ($tags as $attributes) {
                 $alias = empty($attributes['alias']) ? $id : $attributes['alias'];
-                $enabledParamName = sprintf('pimcore_monitor.checks.%s.enabled', $alias);
+                $enabledParamName = \sprintf('pimcore_monitor.checks.%s.enabled', $alias);
 
                 if ($container->hasParameter($enabledParamName) && $container->getParameter($enabledParamName)) {
                     $runnerDefinition = $container->getDefinition('pimcore_monitor.runner');

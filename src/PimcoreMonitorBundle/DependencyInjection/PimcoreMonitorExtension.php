@@ -17,7 +17,6 @@ declare(strict_types=1);
 
 namespace Wvision\Bundle\PimcoreMonitorBundle\DependencyInjection;
 
-use Exception;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -28,7 +27,7 @@ class PimcoreMonitorExtension extends Extension
     /**
      * {@inheritdoc}
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -38,7 +37,7 @@ class PimcoreMonitorExtension extends Extension
         // Register report parameters
         foreach ($config['report'] ?? [] as $confName => $confValue) {
             $container->setParameter(
-                sprintf('pimcore_monitor.report.%s', $confName),
+                \sprintf('pimcore_monitor.report.%s', $confName),
                 $confValue
             );
         }
@@ -47,7 +46,7 @@ class PimcoreMonitorExtension extends Extension
         foreach ($config['checks'] ?? [] as $checkName => $checkConfig) {
             foreach ($checkConfig as $confName => $confValue) {
                 $container->setParameter(
-                    sprintf('pimcore_monitor.checks.%s.%s', $checkName, $confName),
+                    \sprintf('pimcore_monitor.checks.%s.%s', $checkName, $confName),
                     $confValue
                 );
             }

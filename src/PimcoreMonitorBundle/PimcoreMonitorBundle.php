@@ -61,7 +61,6 @@ class PimcoreMonitorBundle extends AbstractPimcoreBundle
         ];
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -77,8 +76,9 @@ class PimcoreMonitorBundle extends AbstractPimcoreBundle
      */
     public function build(ContainerBuilder $container): void
     {
-        if (method_exists($container, 'registerForAutoconfiguration')) {
-            $container->registerForAutoconfiguration(CheckInterface::class)
+        if (\method_exists($container, 'registerForAutoconfiguration')) {
+            $container
+                ->registerForAutoconfiguration(CheckInterface::class)
                 ->addTag('pimcore_monitor.check');
         }
 

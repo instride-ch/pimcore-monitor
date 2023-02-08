@@ -50,7 +50,7 @@ services:
             - '%pimcore_monitor.checks.mysql_version.skip%'
             - '%pimcore_monitor.checks.mysql_version.version%'
             - '%pimcore_monitor.checks.mysql_version.operator%'
-            - '@Pimcore\Db\ConnectionInterface'
+            - '@doctrine.dbal.default_connection'
         tags:
             - { name: pimcore_monitor.check, alias: mysql_version }
 
@@ -85,7 +85,7 @@ services:
             - '%pimcore_monitor.checks.pimcore_element_count.skip%'
             - '%pimcore_monitor.checks.pimcore_element_count.warning_threshold%'
             - '%pimcore_monitor.checks.pimcore_element_count.critical_threshold%'
-            - '@Pimcore\Db\ConnectionInterface'
+            - '@doctrine.dbal.default_connection'
         tags:
             - { name: pimcore_monitor.check, alias: pimcore_element_count }
 

@@ -73,7 +73,7 @@ class HealthCheckController extends AdminController
 
         $results = $reporter->getResults();
 
-        return $this->render('@PimcoreMonitor/Admin/Health/status.html.twig', [
+        return $this->render('@PimcoreMonitor/admin/health/status.html.twig', [
             'results' => $results,
         ]);
     }

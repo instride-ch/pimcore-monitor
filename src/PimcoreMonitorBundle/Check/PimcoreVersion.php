@@ -26,12 +26,7 @@ class PimcoreVersion extends AbstractCheck
 {
     protected const IDENTIFIER = 'pimcore:version';
 
-    protected bool $skip;
-
-    public function __construct(bool $skip)
-    {
-        $this->skip = $skip;
-    }
+    public function __construct(protected bool $skip) {}
 
     /**
      * {@inheritDoc}
@@ -42,11 +37,12 @@ class PimcoreVersion extends AbstractCheck
             return new Skip('Check was skipped');
         }
 
-        $version = InstalledVersions::getPrettyVersion('pimcore/pimcore');
+        $packageName = 'pimcore/pimcore';
+        $version = InstalledVersions::getPrettyVersion($packageName);
 
-        return new Success(sprintf('The system is running on Pimcore %s', $version), [
+        return new Success(\sprintf('The system is running on Pimcore %s', $version), [
             'semver' => $version,
-            'reference' => InstalledVersions::getReference('pimcore/pimcore'),
+            'reference' => InstalledVersions::getReference($packageName),
         ]);
     }
 
