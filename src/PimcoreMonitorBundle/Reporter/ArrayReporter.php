@@ -24,6 +24,7 @@ use Laminas\Diagnostics\Result\SkipInterface;
 use Laminas\Diagnostics\Result\SuccessInterface;
 use Laminas\Diagnostics\Result\WarningInterface;
 use Laminas\Diagnostics\Runner\Reporter\ReporterInterface;
+use Pimcore\Tool\Requirements\Check;
 use Wvision\Bundle\PimcoreMonitorBundle\Check\CheckInterface;
 
 class ArrayReporter implements ReporterInterface
@@ -72,6 +73,10 @@ class ArrayReporter implements ReporterInterface
 
     public function onAfterRun(BaseCheckInterface|CheckInterface $check, ResultInterface $result, $checkAlias = null)
     {
+        if (!$check instanceof CheckInterface) {
+            return;
+        }
+
         switch (true) {
             case $result instanceof SuccessInterface:
                 $status = 0;

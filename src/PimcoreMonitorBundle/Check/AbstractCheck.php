@@ -21,6 +21,8 @@ use Laminas\Diagnostics\Check\CheckInterface as BaseCheckInterface;
 
 abstract class AbstractCheck implements BaseCheckInterface, CheckInterface
 {
+    protected const IDENTIFIER = '__undefined__';
+
     /**
      * {@inheritDoc}
      */

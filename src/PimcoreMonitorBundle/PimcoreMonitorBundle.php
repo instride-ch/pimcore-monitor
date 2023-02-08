@@ -30,14 +30,6 @@ class PimcoreMonitorBundle extends AbstractPimcoreBundle
     /**
      * {@inheritDoc}
      */
-    protected function getComposerPackageName(): string
-    {
-        return 'w-vision/pimcore-monitor-bundle';
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getNiceName(): string
     {
         return 'Pimcore Monitor Bundle';
@@ -83,5 +75,13 @@ class PimcoreMonitorBundle extends AbstractPimcoreBundle
         }
 
         $container->addCompilerPass(new CheckTagCompilerPass());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getComposerPackageName(): string
+    {
+        return 'w-vision/pimcore-monitor-bundle';
     }
 }

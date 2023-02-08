@@ -37,7 +37,7 @@ class HealthReportCommand extends Command
     public function __construct(
         private string $reportEndpoint,
         private string $apiKey,
-        private array $pimcoreSystemConfig,
+        private array $systemConfig,
         private string $secret,
         private HttpClientInterface $httpClient,
         private RunnerManager $runnerManager
@@ -77,7 +77,7 @@ class HealthReportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $instanceId = $this->getInstanceId();
-        $hostDomain = $this->pimcoreSystemConfig['general']['domain'];
+        $hostDomain = $this->systemConfig['general']['domain'];
 
         if (null === $instanceId) {
             $output->writeln('<comment>Please define the secret parameter.</comment>');

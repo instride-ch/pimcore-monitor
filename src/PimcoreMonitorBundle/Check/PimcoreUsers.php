@@ -46,14 +46,13 @@ class PimcoreUsers extends AbstractCheck
                 continue;
             }
 
-            $lastLoginTs = $user->getLastLogin();
-            $lastLogin = Carbon::createFromTimestampUTC($lastLoginTs);
+            $lastLogin = $user->getLastLogin();
 
             $users[] = [
                 'name' => $user->getName(),
                 'active' => $user->isActive(),
                 'is_admin' => $user->isAdmin(),
-                'last_login' => $lastLogin instanceof Carbon ? $lastLogin->toIso8601String() : $lastLoginTs,
+                'last_login' => Carbon::createFromTimestampUTC($lastLogin)->toIso8601String(),
             ];
         }
 

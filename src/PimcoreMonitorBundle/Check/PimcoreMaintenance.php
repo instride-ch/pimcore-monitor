@@ -40,14 +40,13 @@ class PimcoreMaintenance extends AbstractCheck
         }
 
         $lastExecution = $this->maintenanceExecutor->getLastExecution();
-        $lastRun = Carbon::createFromTimestampUTC($lastExecution);
         $data = [
             'active' => false,
-            'last_execution' => $lastRun instanceof Carbon ? $lastRun->toIso8601String() : $lastExecution,
+            'last_execution' => Carbon::createFromTimestampUTC($lastExecution)->toIso8601String(),
         ];
 
         // Maintenance script should run at least every hour + a little tolerance
-        if ($lastExecution && (\time() - $lastExecution) < 3660) {
+        if ($lastExecution > 0 && (\time() - $lastExecution) < 3660) {
             $data['active'] = true;
 
             return new Success('Pimcore maintenance is activated', $data);

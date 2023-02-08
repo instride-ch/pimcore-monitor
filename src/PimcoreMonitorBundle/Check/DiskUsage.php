@@ -43,8 +43,8 @@ class DiskUsage extends AbstractCheck
             return new Skip('Check was skipped');
         }
 
-        $df = \disk_free_space($this->path);
-        $dt = \disk_total_space($this->path);
+        $df = (int) \floor(\disk_free_space($this->path));
+        $dt = (int) \floor(\disk_total_space($this->path));
         $du = $dt - $df;
         $dp = ($du / $dt) * 100;
 
