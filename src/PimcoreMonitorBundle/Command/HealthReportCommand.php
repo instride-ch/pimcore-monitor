@@ -118,7 +118,7 @@ class HealthReportCommand extends Command
             RedirectionExceptionInterface |
             ServerExceptionInterface $e
         ) {
-            $jsonResponse = json_decode($response->getContent(false), true);
+            $jsonResponse = \json_decode($response->getContent(false), true);
 
             $output->writeln(
                 \sprintf('<error>Sending the data to the endpoint failed!</error> – %s – %s',
