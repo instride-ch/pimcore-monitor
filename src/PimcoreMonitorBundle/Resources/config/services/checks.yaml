@@ -36,6 +36,16 @@ services:
         tags:
             - { name: pimcore_monitor.check, alias: hosting_size }
 
+    # Database Size Check
+    Wvision\Bundle\PimcoreMonitorBundle\Check\DatabaseSize:
+        arguments:
+            - '%pimcore_monitor.checks.database_size.skip%'
+            - '%pimcore_monitor.checks.database_size.warning_threshold%'
+            - '%pimcore_monitor.checks.database_size.critical_threshold%'
+            - '@doctrine.dbal.default_connection'
+        tags:
+            - { name: pimcore_monitor.check, alias: database_size }
+
     # HTTPS Connection Check
     Wvision\Bundle\PimcoreMonitorBundle\Check\HttpsConnection:
         arguments:
