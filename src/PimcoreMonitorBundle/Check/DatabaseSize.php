@@ -84,7 +84,7 @@ class DatabaseSize extends AbstractCheck
         $size = $this->connection->fetchAll($query);
 
         if (\is_array($size) && isset($size[0]['size'])) {
-            return (int)$size[0]['size'];
+            return (int) $size[0]['size'];
         }
 
         return 0;
