@@ -62,7 +62,7 @@ class DatabaseSize extends AbstractCheck
             return new Warning(\sprintf('Database size is high: %s', \formatBytes($size)), $data);
         }
 
-        return new Success(sprintf('Database size is %s', \formatBytes($size)), $data);
+        return new Success(\sprintf('Database size is %s', \formatBytes($size)), $data);
     }
 
     /**
