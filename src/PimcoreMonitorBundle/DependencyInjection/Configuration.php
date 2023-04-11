@@ -169,7 +169,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->integerNode('warning_threshold')
                             ->info('The warning threshold for the database size in bytes.')
-                            ->defaultValue(536870912)
+                            ->defaultValue(964689920)
                             ->isRequired()
                             ->min(0)
                         ->end()
