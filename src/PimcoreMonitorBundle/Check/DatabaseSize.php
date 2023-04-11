@@ -83,8 +83,7 @@ class DatabaseSize extends AbstractCheck
                     GROUP BY table_schema";
         $size = $this->connection->fetchAll($query);
 
-        if(is_array($size) && isset($size[0]['size']))
-        {
+        if (\is_array($size) && isset($size[0]['size'])) {
             return (int)$size[0]['size'];
         }
 
