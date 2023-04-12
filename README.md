@@ -13,6 +13,7 @@ requirements, like availability of PHP extensions.
 - **DoctrineMigrations:** Checks whether all Doctrine Migrations have been migrated.
 - **HostingSize:** Checks how much Disk space is used by this hosting.
 - **DatabaseSize:** Checks how much space the Database uses on this hosting.
+- **DatabaseTableSize:** Checks how much space each Database Table uses on this hosting.
 - **HttpsConnection:** Checks whether the HTTPS encryption is enabled.
 - **MySqlVersion:** Checks what MySQL version is configured.
 - **PhpVersion:** Checks what PHP version is configured.
@@ -27,6 +28,7 @@ requirements, like availability of PHP extensions.
 * [Installation & Bundle Configuration](docs/00-installation-configuration.md)
 * [Adding and Running Checks](docs/01-adding-custom-checks.md)
 * [Commands](docs/02-commands.md)
+* [Defaults](docs/03-defaults.md)
 
 ## License
 **w-vision AG**, Sandgruebestrasse 4, 6210 Sursee, Switzerland  
