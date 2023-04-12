@@ -74,7 +74,7 @@ class DatabaseTableSize extends AbstractCheck
             return new Failure(
                 \sprintf(
                     'Following database table sizes are too high: %s',
-                    \implode(',', array_keys($data['critical']))),
+                    \implode(',', \array_keys($data['critical']))),
                 $data
             );
         }
