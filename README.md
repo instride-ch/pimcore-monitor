@@ -13,7 +13,7 @@ requirements, like availability of PHP extensions.
 - **DoctrineMigrations:** Checks whether all Doctrine Migrations have been migrated.
 - **HostingSize:** Checks how much Disk space is used by this hosting.
 - **DatabaseSize:** Checks how much space the Database uses on this hosting.
-- **DatabaseTableSize:** Checks how much space the Database Tables uses on this hosting.
+- **DatabaseTableSize:** Checks how much space each Database Table uses on this hosting.
 - **HttpsConnection:** Checks whether the HTTPS encryption is enabled.
 - **MySqlVersion:** Checks what MySQL version is configured.
 - **PhpVersion:** Checks what PHP version is configured.
