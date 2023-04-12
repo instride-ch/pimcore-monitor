@@ -46,7 +46,7 @@ class DatabaseTableSize extends AbstractCheck
 
         $sizes = $this->getDatabaseTableSizes();
 
-        if (!is_array($sizes)) {
+        if (!\is_array($sizes)) {
             return new Failure('Database table sizes could not be retrieved');
         }
 
