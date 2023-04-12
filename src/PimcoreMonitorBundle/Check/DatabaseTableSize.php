@@ -83,7 +83,7 @@ class DatabaseTableSize extends AbstractCheck
             return new Warning(
                 \sprintf(
                     'Following database table sizes are high: %s',
-                    \implode(',', array_keys($data['warning']))),
+                    \implode(',', \array_keys($data['warning']))),
                 $data
             );
         }
