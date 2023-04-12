@@ -56,7 +56,7 @@ class DatabaseTableSize extends AbstractCheck
             'critical' => [],
         ];
 
-        foreach($sizes as $size) {
+        foreach ($sizes as $size) {
             if ($size['size'] >= $this->criticalThreshold) {
                 $data['critical'][$size['table']] = \formatBytes($size['size']);
                 continue;
