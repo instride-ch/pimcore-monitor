@@ -123,7 +123,7 @@ class HealthReportCommand extends Command
             $output->writeln(
                 \sprintf(
                     '<error>Sending the data to the endpoint failed!</error> – %s – %s',
-                    $jsonResponse['message'],
+                    ($jsonResponse) ? $jsonResponse['message'] : 'no json response',
                     $e->getMessage()
                 )
             );

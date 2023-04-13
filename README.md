@@ -33,6 +33,6 @@ requirements, like availability of PHP extensions.
 ## License
 **w-vision AG**, Sandgruebestrasse 4, 6210 Sursee, Switzerland  
 support@w-vision.ch, [w-vision.ch](https://www.w-vision.ch)  
-Copyright © 2022 w-vision AG. All rights reserved.
+Copyright © 2023 w-vision AG. All rights reserved.
 
 For licensing details please visit [LICENSE.md](LICENSE.md) 
