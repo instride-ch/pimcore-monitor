@@ -33,7 +33,7 @@ class HealthCheckController extends AdminController
         // Check rights
         if (!$adminUser || !$adminUser->isAdmin()) {
             Logger::error(
-                'User {user} attempted to access the system health report results, but has no permission to do so',
+                'User {user} attempted to access the system health report results, but has no permission to do so.',
                 ['user' => $adminUser->getName()]
             );
 
@@ -58,7 +58,7 @@ class HealthCheckController extends AdminController
         // Check rights
         if (!$adminUser || !$adminUser->isAdmin()) {
             Logger::error(
-                'User {user} attempted to access the system health status page, but has no permission to do so',
+                'User {user} attempted to access the system health status page, but has no permission to do so.',
                 ['user' => $adminUser->getName()]
             );
 
