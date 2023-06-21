@@ -139,13 +139,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->integerNode('warning_threshold')
                             ->info('The warning threshold for the hosting size in bytes.')
-                            ->defaultValue(48318382080)
+                            ->defaultValue(48318382080) # 45 GB
                             ->isRequired()
                             ->min(0)
                         ->end()
                         ->integerNode('critical_threshold')
                             ->info('The critical threshold for the hosting size in bytes.')
-                            ->defaultValue(53687091200)
+                            ->defaultValue(53687091200) # 50 GB
                             ->isRequired()
                             ->min(0)
                         ->end()
@@ -169,13 +169,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->integerNode('warning_threshold')
                             ->info('The warning threshold for the database size in bytes.')
-                            ->defaultValue(964689920)
+                            ->defaultValue(9878424780) # 9.2 GB
                             ->isRequired()
                             ->min(0)
                         ->end()
                         ->integerNode('critical_threshold')
                             ->info('The critical threshold for the database size in bytes.')
-                            ->defaultValue(1073741824)
+                            ->defaultValue(10737418240) # 10 GB
                             ->isRequired()
                             ->min(0)
                         ->end()
@@ -194,13 +194,13 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->integerNode('warning_threshold')
                             ->info('The warning threshold for all database tables size in bytes.')
-                            ->defaultValue(94371840)
+                            ->defaultValue(943718400) # 900 MB
                             ->isRequired()
                             ->min(0)
                         ->end()
                         ->integerNode('critical_threshold')
                             ->info('The critical threshold for all database tables size in bytes.')
-                            ->defaultValue(104857600)
+                            ->defaultValue(1073741824) # 1 GB
                             ->isRequired()
                             ->min(0)
                         ->end()
