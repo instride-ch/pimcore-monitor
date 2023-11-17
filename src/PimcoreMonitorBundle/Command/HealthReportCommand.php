@@ -37,7 +37,7 @@ class HealthReportCommand extends Command
     public function __construct(
         private string $reportEndpoint,
         private string $apiKey,
-        private string $instance_environment,
+        private string $instanceEnvironment,
         private array $systemConfig,
         private string $secret,
         private HttpClientInterface $httpClient,
@@ -110,7 +110,7 @@ class HealthReportCommand extends Command
                     'checks' => $checkReporter->getResults(),
                     'metadata' => [
                         'host_domain' => $hostDomain,
-                        'instance_environment' => $this->instance_environment,
+                        'instance_environment' => $this->instanceEnvironment,
                     ]
                 ],
             ]);
