@@ -37,6 +37,7 @@ class HealthReportCommand extends Command
     public function __construct(
         private string $reportEndpoint,
         private string $apiKey,
+        private string $instance_environment,
         private array $systemConfig,
         private string $secret,
         private HttpClientInterface $httpClient,
@@ -76,10 +77,10 @@ class HealthReportCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $instanceId = $this->getInstanceId();
+        $projectId = $this->getInstanceId();
         $hostDomain = $this->systemConfig['general']['domain'];
 
-        if (null === $instanceId) {
+        if (null === $projectId) {
             $output->writeln('<comment>Please define the secret parameter.</comment>');
 
             return Command::FAILURE;
@@ -105,9 +106,12 @@ class HealthReportCommand extends Command
             $response = $this->httpClient->request('PUT', $input->getOption('endpoint'), [
                 'auth_bearer' => $this->apiKey,
                 'json' => [
-                    'instance_id' => $instanceId,
-                    'host_domain' => $hostDomain,
+                    'project_id'=> $projectId,
                     'checks' => $checkReporter->getResults(),
+                    'metadata' => [
+                        'host_domain' => $hostDomain,
+                        'instance_environment' => $this->instance_environment,
+                    ]
                 ],
             ]);
             $payload = $response->toArray();

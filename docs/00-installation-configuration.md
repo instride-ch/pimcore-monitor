@@ -27,6 +27,9 @@ pimcore_monitor:
 
         # Default health report API endpoint to send data to.
         default_endpoint: 'https://health.example.com/report'
+
+        # Environment description for the instance (e.g. "Production", "Staging", "Development"). 
+        instance_environment: 'Production'
 ```
 
 > **Note:** The health report is triggered with the command `pimcore:monitor:health-report`.

@@ -12,6 +12,7 @@ services:
         arguments:
             - '%pimcore_monitor.report.default_endpoint%'
             - '%pimcore_monitor.report.api_key%'
+            - '%pimcore_monitor.report.instance_environment%'
             - '%pimcore.config%'
             - '%secret%'
             - '@http_client'

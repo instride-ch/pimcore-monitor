@@ -52,6 +52,10 @@ class Configuration implements ConfigurationInterface
                     ->info('Default health report API endpoint to send data to.')
                     ->isRequired()
                 ->end()
+                ->scalarNode('instance_environment')
+                    ->info('Environment for project')
+                    ->isRequired()
+                ->end()
             ->end();
 
         return $rootNode;
