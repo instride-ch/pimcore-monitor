@@ -55,6 +55,9 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('instance_environment')
                     ->info('Environment for project')
                     ->isRequired()
+                    ->cannotBeEmpty()
+                    ->defaultValue('prod')
+                    ->example('prod, dev, test')
                 ->end()
             ->end();
 

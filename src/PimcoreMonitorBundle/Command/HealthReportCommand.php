@@ -77,10 +77,10 @@ class HealthReportCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $projectId = $this->getInstanceId();
+        $instanceId = $this->getInstanceId();
         $hostDomain = $this->systemConfig['general']['domain'];
 
-        if (null === $projectId) {
+        if (null === $instanceId) {
             $output->writeln('<comment>Please define the secret parameter.</comment>');
 
             return Command::FAILURE;
@@ -90,6 +90,10 @@ class HealthReportCommand extends Command
             $output->writeln('<comment>Please define the main domain.</comment>');
 
             return Command::FAILURE;
+        }
+
+        if (empty($this->instanceEnvironment)) {
+            $this->instanceEnvironment = 'prod';
         }
 
         $checkReporter = new ArrayReporter(
@@ -106,7 +110,7 @@ class HealthReportCommand extends Command
             $response = $this->httpClient->request('PUT', $input->getOption('endpoint'), [
                 'auth_bearer' => $this->apiKey,
                 'json' => [
-                    'project_id'=> $projectId,
+                    'instance_id'=> $instanceId,
                     'checks' => $checkReporter->getResults(),
                     'metadata' => [
                         'host_domain' => $hostDomain,
