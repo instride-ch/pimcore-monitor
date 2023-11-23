@@ -92,10 +92,6 @@ class HealthReportCommand extends Command
             return Command::FAILURE;
         }
 
-        if (empty($this->instanceEnvironment)) {
-            $this->instanceEnvironment = 'prod';
-        }
-
         $checkReporter = new ArrayReporter(
             false,
             $input->getOption('exclude'),
