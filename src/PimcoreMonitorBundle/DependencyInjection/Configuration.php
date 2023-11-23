@@ -53,7 +53,7 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                 ->end()
                 ->scalarNode('instance_environment')
-                    ->info('Environment for project')
+                    ->info('The name of the environment in which the application is running in.')
                     ->isRequired()
                     ->cannotBeEmpty()
                     ->defaultValue('prod')
