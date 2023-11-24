@@ -106,7 +106,7 @@ class HealthReportCommand extends Command
             $response = $this->httpClient->request('PUT', $input->getOption('endpoint'), [
                 'auth_bearer' => $this->apiKey,
                 'json' => [
-                    'instance_id'=> $instanceId,
+                    'instance_id' => $instanceId,
                     'checks' => $checkReporter->getResults(),
                     'metadata' => [
                         'host_domain' => $hostDomain,
