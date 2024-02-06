@@ -1,7 +1,7 @@
-![Pimcore Monitor Bundle](docs/images/github_banner.png "Pimcore Monitor Bundle")
+![Pimcore Monitor](docs/images/github_banner.png "Pimcore Monitor")
 
 [![Software License](https://img.shields.io/badge/license-GPLv3-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Latest Stable Version](https://img.shields.io/packagist/v/w-vision/pimcore-monitor-bundle.svg?style=flat-square)](https://packagist.org/packages/w-vision/pimcore-monitor-bundle)
+[![Latest Stable Version](https://img.shields.io/packagist/v/instride/pimcore-monitor.svg?style=flat-square)](https://packagist.org/packages/instride/pimcore-monitor)
 
 This bundle provides a way to run a series of Pimcore and application related health checks. Each health check should
 implement some application logic that you want to make sure always works. Another usage can be testing for specific
@@ -31,8 +31,8 @@ requirements, like availability of PHP extensions.
 * [Defaults](docs/03-defaults.md)
 
 ## License
-**w-vision AG**, Sandgruebestrasse 4, 6210 Sursee, Switzerland  
-support@w-vision.ch, [w-vision.ch](https://www.w-vision.ch)  
-Copyright © 2023 w-vision AG. All rights reserved.
+**instride AG**, Sandgruebestrasse 4, 6210 Sursee, Switzerland  
+connect@instride.ch, [instride.ch](https://instride.ch)  
+Copyright © 2024 instride AG. All rights reserved.
 
 For licensing details please visit [LICENSE.md](LICENSE.md) 

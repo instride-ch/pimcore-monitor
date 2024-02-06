@@ -6,7 +6,7 @@ and provide the following methods in addition to a unique identifier.
 ```php
 <?php
 
-namespace Wvision\Bundle\PimcoreMonitorBundle\Check;
+namespace Instride\Bundle\PimcoreMonitorBundle\Check;
 
 use Laminas\Diagnostics\Result\ResultInterface;
 

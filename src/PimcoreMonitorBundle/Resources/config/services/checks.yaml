@@ -1,7 +1,7 @@
 services:
 
     # App Environment Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\AppEnvironment:
+    Instride\Bundle\PimcoreMonitorBundle\Check\AppEnvironment:
         arguments:
             - '%pimcore_monitor.checks.app_environment.skip%'
             - '%pimcore_monitor.checks.app_environment.environment%'
@@ -9,7 +9,7 @@ services:
             - { name: pimcore_monitor.check, alias: app_environment }
 
     # Disk Usage Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\DiskUsage:
+    Instride\Bundle\PimcoreMonitorBundle\Check\DiskUsage:
         arguments:
             - '%pimcore_monitor.checks.disk_usage.skip%'
             - '%pimcore_monitor.checks.disk_usage.warning_threshold%'
@@ -19,7 +19,7 @@ services:
             - { name: pimcore_monitor.check, alias: disk_usage }
 
     # Doctrine Migrations Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\DoctrineMigrations:
+    Instride\Bundle\PimcoreMonitorBundle\Check\DoctrineMigrations:
         arguments:
             - '%pimcore_monitor.checks.doctrine_migrations.skip%'
             - '@Doctrine\Migrations\DependencyFactory'
@@ -27,7 +27,7 @@ services:
             - { name: pimcore_monitor.check, alias: doctrine_migrations }
 
     # Hosting Size Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\HostingSize:
+    Instride\Bundle\PimcoreMonitorBundle\Check\HostingSize:
         arguments:
             - '%pimcore_monitor.checks.hosting_size.skip%'
             - '%pimcore_monitor.checks.hosting_size.warning_threshold%'
@@ -37,7 +37,7 @@ services:
             - { name: pimcore_monitor.check, alias: hosting_size }
 
     # Database Size Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\DatabaseSize:
+    Instride\Bundle\PimcoreMonitorBundle\Check\DatabaseSize:
         arguments:
             - '%pimcore_monitor.checks.database_size.skip%'
             - '%pimcore_monitor.checks.database_size.warning_threshold%'
@@ -47,7 +47,7 @@ services:
             - { name: pimcore_monitor.check, alias: database_size }
 
     # Database Table Size Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\DatabaseTableSize:
+    Instride\Bundle\PimcoreMonitorBundle\Check\DatabaseTableSize:
         arguments:
             - '%pimcore_monitor.checks.database_table_size.skip%'
             - '%pimcore_monitor.checks.database_table_size.warning_threshold%'
@@ -57,7 +57,7 @@ services:
             - { name: pimcore_monitor.check, alias: database_table_size }
 
     # HTTPS Connection Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\HttpsConnection:
+    Instride\Bundle\PimcoreMonitorBundle\Check\HttpsConnection:
         arguments:
             - '%pimcore_monitor.checks.https_connection.skip%'
             - '%pimcore.config%'
@@ -65,7 +65,7 @@ services:
             - { name: pimcore_monitor.check, alias: https_connection }
 
     # MySQL Version Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\MySqlVersion:
+    Instride\Bundle\PimcoreMonitorBundle\Check\MySqlVersion:
         arguments:
             - '%pimcore_monitor.checks.mysql_version.skip%'
             - '%pimcore_monitor.checks.mysql_version.version%'
@@ -75,7 +75,7 @@ services:
             - { name: pimcore_monitor.check, alias: mysql_version }
 
     # PHP Version Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\PhpVersion:
+    Instride\Bundle\PimcoreMonitorBundle\Check\PhpVersion:
         arguments:
             - '%pimcore_monitor.checks.php_version.skip%'
             - '%pimcore_monitor.checks.php_version.version%'
@@ -84,7 +84,7 @@ services:
             - { name: pimcore_monitor.check, alias: php_version }
 
     # Pimcore Areabricks Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreAreabricks:
+    Instride\Bundle\PimcoreMonitorBundle\Check\PimcoreAreabricks:
         arguments:
             - '%pimcore_monitor.checks.pimcore_areabricks.skip%'
             - '@Pimcore\Extension\Document\Areabrick\AreabrickManagerInterface'
@@ -92,7 +92,7 @@ services:
             - { name: pimcore_monitor.check, alias: pimcore_areabricks }
 
     # Pimcore Bundles Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreBundles:
+    Instride\Bundle\PimcoreMonitorBundle\Check\PimcoreBundles:
         arguments:
             - '%pimcore_monitor.checks.pimcore_bundles.skip%'
             - '@Pimcore\Extension\Bundle\PimcoreBundleManager'
@@ -100,7 +100,7 @@ services:
             - { name: pimcore_monitor.check, alias: pimcore_bundles }
 
     # Pimcore Element Count Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreElementCount:
+    Instride\Bundle\PimcoreMonitorBundle\Check\PimcoreElementCount:
         arguments:
             - '%pimcore_monitor.checks.pimcore_element_count.skip%'
             - '%pimcore_monitor.checks.pimcore_element_count.warning_threshold%'
@@ -110,7 +110,7 @@ services:
             - { name: pimcore_monitor.check, alias: pimcore_element_count }
 
     # Pimcore Maintenance Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreMaintenance:
+    Instride\Bundle\PimcoreMonitorBundle\Check\PimcoreMaintenance:
         arguments:
             - '%pimcore_monitor.checks.pimcore_maintenance.skip%'
             - '@Pimcore\Maintenance\Executor'
@@ -118,14 +118,14 @@ services:
             - { name: pimcore_monitor.check, alias: pimcore_maintenance }
 
     # Pimcore Users Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreUsers:
+    Instride\Bundle\PimcoreMonitorBundle\Check\PimcoreUsers:
         arguments:
             - '%pimcore_monitor.checks.pimcore_users.skip%'
         tags:
             - { name: pimcore_monitor.check, alias: pimcore_users }
 
     # Pimcore Version Check
-    Wvision\Bundle\PimcoreMonitorBundle\Check\PimcoreVersion:
+    Instride\Bundle\PimcoreMonitorBundle\Check\PimcoreVersion:
         arguments:
             - '%pimcore_monitor.checks.pimcore_version.skip%'
         tags:

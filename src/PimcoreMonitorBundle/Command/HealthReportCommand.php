@@ -11,11 +11,11 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2022 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/PimcoreMonitorBundle/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright  2024 instride AG (https://instride.ch)
+ * @license    https://github.com/instride-ch/PimcoreMonitorBundle/blob/main/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace Wvision\Bundle\PimcoreMonitorBundle\Command;
+namespace Instride\Bundle\PimcoreMonitorBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,8 +27,8 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Wvision\Bundle\PimcoreMonitorBundle\Manager\RunnerManager;
-use Wvision\Bundle\PimcoreMonitorBundle\Reporter\ArrayReporter;
+use Instride\Bundle\PimcoreMonitorBundle\Manager\RunnerManager;
+use Instride\Bundle\PimcoreMonitorBundle\Reporter\ArrayReporter;
 
 class HealthReportCommand extends Command
 {

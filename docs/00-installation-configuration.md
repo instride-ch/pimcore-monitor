@@ -3,7 +3,7 @@
 ### Install with Composer
 
 ```
-composer require w-vision/pimcore-monitor-bundle:^1.0
+composer require instride/pimcore-monitor:^2.0
 ```
 
 ### Enabled the Bundle

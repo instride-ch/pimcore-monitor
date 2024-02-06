@@ -11,18 +11,18 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  Copyright (c) 2022 w-vision AG (https://www.w-vision.ch)
- * @license    https://github.com/w-vision/PimcoreMonitorBundle/blob/master/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @copyright  2024 instride AG (https://instride.ch)
+ * @license    https://github.com/instride-ch/PimcoreMonitorBundle/blob/main/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
-namespace Wvision\Bundle\PimcoreMonitorBundle\Controller\Admin;
+namespace Instride\Bundle\PimcoreMonitorBundle\Controller\Admin;
 
 use Pimcore\Bundle\AdminBundle\Controller\AdminController;
 use Pimcore\Logger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Wvision\Bundle\PimcoreMonitorBundle\Manager\RunnerManager;
-use Wvision\Bundle\PimcoreMonitorBundle\Reporter\ArrayReporter;
+use Instride\Bundle\PimcoreMonitorBundle\Manager\RunnerManager;
+use Instride\Bundle\PimcoreMonitorBundle\Reporter\ArrayReporter;
 
 class HealthCheckController extends AdminController
 {
