@@ -7,7 +7,7 @@
     "pimcore",
     "pimcore-bundle"
   ],
-  "homepage": "https://github.com/instride-ch/PimcoreMonitorBundle",
+  "homepage": "https://github.com/instride-ch/pimcore-monitor",
   "authors": [
     {
       "name": "instride AG",

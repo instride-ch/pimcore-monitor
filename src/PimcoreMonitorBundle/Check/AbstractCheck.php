@@ -12,7 +12,7 @@ declare(strict_types=1);
  * files that are distributed with this source code.
  *
  * @copyright  2024 instride AG (https://instride.ch)
- * @license    https://github.com/instride-ch/PimcoreMonitorBundle/blob/main/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
+ * @license    https://github.com/instride-ch/pimcore-monitor/blob/main/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
 namespace Instride\Bundle\PimcoreMonitorBundle\Check;
