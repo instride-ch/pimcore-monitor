@@ -17,24 +17,24 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\PimcoreMonitorBundle\Controller\Admin;
 
-use Pimcore\Bundle\AdminBundle\Controller\AdminController;
+use Pimcore\Controller\UserAwareController;
 use Pimcore\Logger;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Instride\Bundle\PimcoreMonitorBundle\Manager\RunnerManager;
 use Instride\Bundle\PimcoreMonitorBundle\Reporter\ArrayReporter;
 
-class HealthCheckController extends AdminController
+class HealthCheckController extends UserAwareController
 {
     public function health(RunnerManager $runnerManager): JsonResponse
     {
-        $adminUser = $this->getAdminUser();
+        $pimcoreUser = $this->getPimcoreUser();
 
         // Check rights
-        if (!$adminUser || !$adminUser->isAdmin()) {
+        if (!$pimcoreUser || !$pimcoreUser->isAdmin()) {
             Logger::error(
                 'User {user} attempted to access the system health report results, but has no permission to do so.',
-                ['user' => $adminUser->getName()]
+                ['user' => $pimcoreUser->getName()]
             );
 
             throw $this->createAccessDeniedHttpException();
@@ -53,13 +53,13 @@ class HealthCheckController extends AdminController
 
     public function status(RunnerManager $runnerManager): Response
     {
-        $adminUser = $this->getAdminUser();
+        $pimcoreUser = $this->getPimcoreUser();
 
         // Check rights
-        if (!$adminUser || !$adminUser->isAdmin()) {
+        if (!$pimcoreUser || !$pimcoreUser->isAdmin()) {
             Logger::error(
                 'User {user} attempted to access the system health status page, but has no permission to do so.',
-                ['user' => $adminUser->getName()]
+                ['user' => $pimcoreUser->getName()]
             );
 
             throw $this->createAccessDeniedHttpException();

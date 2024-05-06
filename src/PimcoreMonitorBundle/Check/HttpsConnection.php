@@ -41,7 +41,7 @@ class HttpsConnection extends AbstractCheck
 
         $host = $this->systemConfig['general']['domain'] ?? null;
 
-        if (null === $host) {
+        if (empty($host)) {
             return new Warning('HTTPS encryption could not be checked');
         }
 

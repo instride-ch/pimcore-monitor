@@ -78,8 +78,8 @@ class PimcoreElementCount extends AbstractCheck
             ->from($tableName, 't');
 
         try {
-            $count = $qb->execute()->fetchOne();
-        } catch (DBALException | DBALDriverException) {
+            $count = $qb->executeQuery()->fetchOne();
+        } catch (DBALException) {
             $count = 0;
         }
 

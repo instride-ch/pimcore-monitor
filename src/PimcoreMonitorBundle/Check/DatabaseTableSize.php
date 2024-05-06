@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace Instride\Bundle\PimcoreMonitorBundle\Check;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Laminas\Diagnostics\Result\Failure;
 use Laminas\Diagnostics\Result\ResultInterface;
 use Laminas\Diagnostics\Result\Skip;
@@ -106,10 +107,13 @@ class DatabaseTableSize extends AbstractCheck
     {
         $query = "SELECT TABLE_NAME AS `table`,
                         (DATA_LENGTH + INDEX_LENGTH) AS `size`
-                    FROM information_schema.TABLES
-                    ORDER BY
-                        (DATA_LENGTH + INDEX_LENGTH)
-                    DESC;";
-        return $this->connection->fetchAll($query);
+                  FROM information_schema.TABLES
+                  ORDER BY (DATA_LENGTH + INDEX_LENGTH) DESC;";
+
+        try {
+            return $this->connection->fetchAllAssociative($query);
+        } catch (Exception) {
+            return null;
+        }
     }
 }

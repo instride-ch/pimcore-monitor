@@ -6,8 +6,8 @@
     <title>System Health Status</title>
     <link rel="icon" type="image/png" href="/bundles/pimcoreadmin/img/favicon/favicon-32x32.png">
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
     <main class="container">
@@ -36,25 +36,25 @@
                     </thead>
                     <tbody>
                         {% for result in results %}
-                            {%- if result.status_code is same as(0) %}
+                            {%- if result.status_code == 0 %}
                                 {% set status = {
                                     background: 'table-success',
                                     text: 'text-success',
                                     icon: 'bi-check-circle-fill'
                                 } %}
-                            {% elseif result.status_code is same as(1) %}
+                            {% elseif result.status_code == 1 %}
                                 {% set status = {
                                     background: 'table-warning',
                                     text: 'text-warning',
                                     icon: 'bi-exclamation-circle-fill'
                                 } %}
-                            {% elseif result.status_code is same as(2) %}
+                            {% elseif result.status_code == 2 %}
                                 {% set status = {
                                     background: 'table-info',
                                     text: 'text-info',
                                     icon: 'bi-skip-end-circle-fill'
                                 } %}
-                            {% elseif result.status_code is same as(3) %}
+                            {% elseif result.status_code == 3 %}
                                 {% set status = {
                                     background: 'table-danger',
                                     text: 'text-danger',

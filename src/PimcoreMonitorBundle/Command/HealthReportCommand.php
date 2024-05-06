@@ -78,7 +78,7 @@ class HealthReportCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $instanceId = $this->getInstanceId();
-        $hostDomain = $this->systemConfig['general']['domain'];
+        $hostDomain = $this->systemConfig['general']['domain'] ?? null;
 
         if (null === $instanceId) {
             $output->writeln('<comment>Please define the secret parameter.</comment>');
@@ -106,7 +106,7 @@ class HealthReportCommand extends Command
             $response = $this->httpClient->request('PUT', $input->getOption('endpoint'), [
                 'auth_bearer' => $this->apiKey,
                 'json' => [
-                    'instance_id'=> $instanceId,
+                    'instance_id' => $instanceId,
                     'checks' => $checkReporter->getResults(),
                     'metadata' => [
                         'host_domain' => $hostDomain,
@@ -120,15 +120,12 @@ class HealthReportCommand extends Command
             ClientExceptionInterface |
             DecodingExceptionInterface |
             RedirectionExceptionInterface |
-            ServerExceptionInterface $e
+            ServerExceptionInterface $exception
         ) {
-            $jsonResponse = \json_decode($response->getContent(false), true);
-
             $output->writeln(
                 \sprintf(
-                    '<error>Sending the data to the endpoint failed!</error> – %s – %s',
-                    ($jsonResponse) ? $jsonResponse['message'] : 'no json response',
-                    $e->getMessage()
+                    '<error>Sending the data to the endpoint failed!</error> – %s',
+                    $exception->getMessage()
                 )
             );
 

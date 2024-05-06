@@ -41,7 +41,7 @@ class PimcoreBundles extends AbstractCheck
                 'identifier' => $this->pimcoreBundleManager->getBundleIdentifier($bundle),
                 'name' => $bundle->getNiceName(),
                 'version' => $bundle->getVersion(),
-                'is_enabled' => $this->pimcoreBundleManager->isEnabled($bundle),
+                'is_enabled' => true, // always enabled, see https://github.com/pimcore/pimcore/pull/13393
                 'is_installed' => $this->pimcoreBundleManager->isInstalled($bundle),
             ];
         }

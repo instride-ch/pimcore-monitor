@@ -1,12 +1,6 @@
-pimcore.registerNS('pimcore.plugin.PimcoreMonitorBundle');
-
-pimcore.plugin.PimcoreMonitor = Class.create(pimcore.plugin.admin, {
-    getClassName: function () {
-        return 'pimcore.plugin.PimcoreMonitorBundle';
-    },
-
+pimcore.plugin.PimcoreMonitor = Class.create({
     initialize: function () {
-        pimcore.plugin.broker.registerPlugin(this);
+        document.addEventListener(pimcore.events.pimcoreReady, this.pimcoreReady.bind(this));
     },
 
     pimcoreReady: function () {

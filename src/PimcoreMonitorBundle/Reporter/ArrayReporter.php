@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace Instride\Bundle\PimcoreMonitorBundle\Reporter;
 
+use Instride\Bundle\PimcoreMonitorBundle\Check\CheckInterface;
 use Laminas\Diagnostics\Check\CheckInterface as BaseCheckInterface;
 use Laminas\Diagnostics\Result\Collection as ResultsCollection;
 use Laminas\Diagnostics\Result\ResultInterface;
@@ -24,8 +25,6 @@ use Laminas\Diagnostics\Result\SkipInterface;
 use Laminas\Diagnostics\Result\SuccessInterface;
 use Laminas\Diagnostics\Result\WarningInterface;
 use Laminas\Diagnostics\Runner\Reporter\ReporterInterface;
-use Pimcore\Tool\Requirements\Check;
-use Instride\Bundle\PimcoreMonitorBundle\Check\CheckInterface;
 
 class ArrayReporter implements ReporterInterface
 {
@@ -71,8 +70,11 @@ class ArrayReporter implements ReporterInterface
         return \in_array($checkAlias, $this->includeChecks, true);
     }
 
-    public function onAfterRun(BaseCheckInterface|CheckInterface $check, ResultInterface $result, $checkAlias = null)
-    {
+    public function onAfterRun(
+        BaseCheckInterface|CheckInterface $check,
+        ResultInterface $result,
+        $checkAlias = null
+    ): void {
         if (!$check instanceof CheckInterface) {
             return;
         }

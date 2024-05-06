@@ -266,7 +266,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                         ->scalarNode('version')
                             ->info('The expected version.')
-                            ->defaultValue('8.0')
+                            ->defaultValue('8.1')
                             ->isRequired()
                         ->end()
                         ->scalarNode('operator')

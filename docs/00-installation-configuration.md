@@ -3,15 +3,20 @@
 ### Install with Composer
 
 ```
-composer require instride/pimcore-monitor:^2.0
+composer require instride/pimcore-monitor:^3.0
 ```
 
-### Enabled the Bundle
+### Loading the Bundle
 
-You can enable the Bundle within the Pimcore Back-End or via CLI command.
+Register the bundle in your `config/bundles.php` file to enable it.
 
-```
-php bin/console pimcore:bundle:enable PimcoreMonitorBundle
+```php
+<?php
+
+return [
+    // ...
+    Instride\Bundle\PimcoreMonitorBundle\PimcoreMonitorBundle::class => ['all' => true],
+];
 ```
 
 ### Report Configuration
@@ -23,7 +28,7 @@ pimcore_monitor:
     report:
 
         # API key for health report endpoint.
-        api_key:          '<YOUR_RANDOM_BEARER_TOKEN>'
+        api_key: '<YOUR_RANDOM_BEARER_TOKEN>'
 
         # Default health report API endpoint to send data to.
         default_endpoint: 'https://health.example.com/report'

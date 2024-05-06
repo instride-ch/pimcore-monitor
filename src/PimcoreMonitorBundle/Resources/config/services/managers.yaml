@@ -3,4 +3,4 @@ services:
     # Runner Manager
     Instride\Bundle\PimcoreMonitorBundle\Manager\RunnerManager:
         arguments:
-            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@service_container'

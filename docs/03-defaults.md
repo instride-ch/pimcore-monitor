@@ -35,6 +35,7 @@ pimcore_monitor:
         https_connection:
             enabled: true
             skip: false
+            host: null
         mysql_version:
             enabled: true
             skip: false
@@ -43,7 +44,7 @@ pimcore_monitor:
         php_version:
             enabled: true
             skip: false
-            version: '8.0'
+            version: '8.1'
             operator: '>='
         pimcore_areabricks:
             enabled: true

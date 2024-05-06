@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace Instride\Bundle\PimcoreMonitorBundle\Check;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 use Laminas\Diagnostics\Result\Failure;
 use Laminas\Diagnostics\Result\ResultInterface;
 use Laminas\Diagnostics\Result\Skip;
@@ -79,11 +80,16 @@ class DatabaseSize extends AbstractCheck
     private function getDatabaseSize(): int
     {
         $query = "SELECT SUM(data_length + index_length) AS size
-                    FROM information_schema.TABLES
-                    GROUP BY table_schema";
-        $size = $this->connection->fetchAll($query);
+                  FROM information_schema.TABLES
+                  GROUP BY table_schema";
 
-        if (\is_array($size) && isset($size[0]['size'])) {
+        try {
+            $size = $this->connection->fetchAllAssociative($query);
+        } catch (Exception) {
+            return 0;
+        }
+
+        if (isset($size[0]['size'])) {
             return (int) $size[0]['size'];
         }
 

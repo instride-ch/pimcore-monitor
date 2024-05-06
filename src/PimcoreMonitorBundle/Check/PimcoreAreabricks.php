@@ -41,7 +41,7 @@ class PimcoreAreabricks extends AbstractCheck
                 'identifier' => $brickId,
                 'name' => $brick->getName(),
                 'description' => $brick->getDescription(),
-                'is_enabled' => $this->areabrickManager->isEnabled($brickId),
+                'is_enabled' => true, // always enabled, see https://github.com/pimcore/pimcore/pull/13393
             ];
         }
 

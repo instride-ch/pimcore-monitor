@@ -18,13 +18,16 @@ declare(strict_types=1);
 namespace Instride\Bundle\PimcoreMonitorBundle;
 
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
+use Pimcore\Extension\Bundle\PimcoreBundleAdminClassicInterface;
+use Pimcore\Extension\Bundle\Traits\BundleAdminClassicTrait;
 use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Instride\Bundle\PimcoreMonitorBundle\Check\CheckInterface;
 use Instride\Bundle\PimcoreMonitorBundle\DependencyInjection\Compiler\CheckTagCompilerPass;
 
-class PimcoreMonitorBundle extends AbstractPimcoreBundle
+class PimcoreMonitorBundle extends AbstractPimcoreBundle implements PimcoreBundleAdminClassicInterface
 {
+    use BundleAdminClassicTrait;
     use PackageVersionTrait;
 
     /**
