@@ -1,23 +1,22 @@
-pimcore.plugin.PimcoreMonitor = Class.create({
-    initialize: function () {
-        document.addEventListener(pimcore.events.pimcoreReady, this.pimcoreReady.bind(this));
-    },
-
-    pimcoreReady: function () {
+class PimcoreMonitor {
+    init() {
         const user = pimcore.globalmanager.get('user');
 
         if (user.admin) {
             const systemHealthStatus = new Ext.Action({
+                id: 'pimcore_monitor',
                 text: t('pimcore_monitor_system_health_status'),
                 iconCls: 'pimcore_monitor_nav_icon_health_status',
-                handler: this.openSystemHealthStatusPage,
+                handler: this.openSystemHealthStatusPage.bind(this),
             });
 
-            layoutToolbar.extrasMenu.add(systemHealthStatus);
+            if (layoutToolbar.extrasMenu) {
+                layoutToolbar.extrasMenu.add(systemHealthStatus);
+            }
         }
-    },
+    }
 
-    openSystemHealthStatusPage: function () {
+    openSystemHealthStatusPage() {
         const systemHealthStatusPanelId = 'pimcore_monitor_system_health_status';
 
         try {
@@ -33,7 +32,9 @@ pimcore.plugin.PimcoreMonitor = Class.create({
                 )
             );
         }
-    },
-});
+    }
+}
 
-const PimcoreMonitorPlugin = new pimcore.plugin.PimcoreMonitor();
+const pimcoreMonitorHandler = new PimcoreMonitor();
+
+document.addEventListener(pimcore.events.pimcoreReady, pimcoreMonitorHandler.init.bind(pimcoreMonitorHandler));
