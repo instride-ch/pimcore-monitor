@@ -45,7 +45,7 @@ class PimcoreElementCount extends AbstractCheck
 
         $documentCount = $this->getTableRowCount('documents', 'id');
         $assetCount = $this->getTableRowCount('assets', 'id');
-        $objectCount = $this->getTableRowCount('objects', 'o_id');
+        $objectCount = $this->getTableRowCount('objects', 'id');
         $totalCount = $documentCount + $assetCount + $objectCount;
 
         $data = [
