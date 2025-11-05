@@ -11,7 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  2024 instride AG (https://instride.ch)
+ * @copyright  2025 instride AG (https://instride.ch)
  * @license    https://github.com/instride-ch/pimcore-monitor/blob/main/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -210,6 +210,40 @@ class Configuration implements ConfigurationInterface
                             ->defaultValue(1073741824) # 1 GB
                             ->isRequired()
                             ->min(0)
+                        ->end()
+                        ->arrayNode('special_tables')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->booleanNode('enabled')
+                                    ->info('Special configuration for special tables.')
+                                    ->defaultValue(false)
+                                ->end()
+                                ->arrayNode('configurations')
+                                ->arrayPrototype()
+                                    ->children()
+                                        ->scalarNode('table_name')
+                                            ->isRequired()
+                                            ->cannotBeEmpty()
+                                            ->defaultValue('')
+                                        ->end()
+                                        ->booleanNode('skip')
+                                            ->info('Skips check for this table.')
+                                            ->defaultValue(false)
+                                        ->end()
+                                        ->integerNode('warning_threshold')
+                                            ->info('The warning threshold for all database tables size in bytes.')
+                                            ->defaultValue(943718400) # 900 MB
+                                            ->min(0)
+                                        ->end()
+                                        ->integerNode('critical_threshold')
+                                            ->info('The critical threshold for all database tables size in bytes.')
+                                            ->defaultValue(1073741824) # 1 GB
+                                            ->min(0)
+                                        ->end()
+                                     ->end()
+                                    ->end()
+                                ->end()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()

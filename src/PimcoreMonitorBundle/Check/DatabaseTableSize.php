@@ -11,7 +11,7 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md and gpl-3.0.txt
  * files that are distributed with this source code.
  *
- * @copyright  2024 instride AG (https://instride.ch)
+ * @copyright  2025 instride AG (https://instride.ch)
  * @license    https://github.com/instride-ch/pimcore-monitor/blob/main/gpl-3.0.txt GNU General Public License version 3 (GPLv3)
  */
 
@@ -30,11 +30,14 @@ class DatabaseTableSize extends AbstractCheck
     protected const IDENTIFIER = 'device:database_table_size';
 
     public function __construct(
-        protected bool $skip,
-        protected int $warningThreshold,
-        protected int $criticalThreshold,
+        protected bool       $skip,
+        protected int        $warningThreshold,
+        protected int        $criticalThreshold,
+        protected array      $specialTables,
         protected Connection $connection
-    ) {}
+    )
+    {
+    }
 
     /**
      * {@inheritDoc}
@@ -57,13 +60,44 @@ class DatabaseTableSize extends AbstractCheck
             'critical' => [],
         ];
 
+        $hasSpecialTableConfig = false;
+        if (!empty($this->specialTables) && \key_exists('configurations', $this->specialTables) && !empty($this->specialTables['configurations'])) {
+            $hasSpecialTableConfig = true;
+        }
+
         foreach ($sizes as $size) {
-            if ($size['size'] >= $this->criticalThreshold) {
+            $warningThreshold = $this->warningThreshold;
+            $criticalThreshold = $this->criticalThreshold;
+
+            $specialConfig = [];
+            if ($hasSpecialTableConfig) {
+                $specialConfig = \array_values(\array_filter($this->specialTables['configurations'], function ($item) use ($size) {
+                    return isset($item['table_name']) && $item['table_name'] === $size['table'];
+                }));
+            }
+
+            if (!empty($specialConfig)) {
+                if (\count($specialConfig) > 1) {
+                    return new Failure('Multiple special configs were retrieved for the same table name. Table -> ' . $size['table']);
+                }
+
+                $specialConfig = $specialConfig[0];
+                if ($specialConfig['skip']) {
+                    $data['skipped'] = $specialConfig['table_name'];
+                    ++$data['ok'];
+                    continue;
+                }
+
+                $warningThreshold = $specialConfig['warning_threshold'];
+                $criticalThreshold = $specialConfig['critical_threshold'];
+            }
+
+            if ($size['size'] >= $criticalThreshold) {
                 $data['critical'][$size['table']] = \formatBytes($size['size']);
                 continue;
             }
 
-            if ($size['size'] >= $this->warningThreshold) {
+            if ($size['size'] >= $warningThreshold) {
                 $data['warning'][$size['table']] = \formatBytes($size['size']);
                 continue;
             }

@@ -52,6 +52,7 @@ services:
             - '%pimcore_monitor.checks.database_table_size.skip%'
             - '%pimcore_monitor.checks.database_table_size.warning_threshold%'
             - '%pimcore_monitor.checks.database_table_size.critical_threshold%'
+            - '%pimcore_monitor.checks.database_table_size.special_tables%'
             - '@doctrine.dbal.default_connection'
         tags:
             - { name: pimcore_monitor.check, alias: database_table_size }
