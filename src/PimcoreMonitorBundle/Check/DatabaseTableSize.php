@@ -83,7 +83,7 @@ class DatabaseTableSize extends AbstractCheck
 
                 $specialConfig = $specialConfig[0];
                 if ($specialConfig['skip']) {
-                    $data['skipped'] = $specialConfig['table_name'];
+                    $data['skipped'][$specialConfig['table_name']] = $specialConfig['table_name'];
                     ++$data['ok'];
                     continue;
                 }
